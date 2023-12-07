@@ -5,7 +5,7 @@ import csv
 import uuid
 
 conn = ag_connect('DrMo', host='localhost', port='10035',
-                  user='mdebellis', password='df1559')
+                  user='xxxxx', password='xxxxx')
 domain_ont_str = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#"
 
 
