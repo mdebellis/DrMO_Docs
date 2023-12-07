@@ -4,43 +4,47 @@ from franz.openrdf.vocabulary import RDF
 import csv
 import uuid
 
-conn = ag_connect('NGO2', host='localhost', port='10035',
-                  user='test', password='xyzzy')
-csrstr = "http://www.semanticweb.org/mdebe/ontologies/NGO#"
+conn = ag_connect('DrMo', host='localhost', port='10035',
+                  user='mdebellis', password='df1559')
+domain_ont_str = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#"
 
 
-def makeCSRIRIstr (inputstr):
-    return csrstr + inputstr
+def make_domain_ont_str (inputstr):
+    return domain_ont_str + inputstr
 
 owl_named_individual = conn.createURI("http://www.w3.org/2002/07/owl#NamedIndividual")
 owl_datatype_property = conn.createURI("http://www.w3.org/2002/07/owl#DatatypeProperty")
-bpath = "crsdata.csv"
-CSRClass = conn.createURI("http://www.semanticweb.org/mdebe/ontologies/NGO#FundingOrganization")
+bpath = "ce12-6-23.csv"
+# file_class is the IRI for the class that the properties in the csv file apply to. I.e.,
+# when parsing the file, the system will search for an instance of that class and if one is
+# not found, then it will be created.
+file_class_str = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#JournalArticle"
+file_class = conn.createURI(file_class_str)
 
 
-def findCSR(idstr):
-    csriri = conn.createURI('http://www.semanticweb.org/mdebe/ontologies/NGO#' + idstr)
-    statements = conn.getStatements(csriri, RDF.TYPE, CSRClass)
+def find_instance(idstr):
+    instance_iri = conn.createURI(domain_ont_str + idstr)
+    statements = conn.getStatements(instance_iri, RDF.TYPE, file_class)
     with statements:
         for statement in statements:
             if len(statements) > 1:
-                print(f'Error two or more Individuals with csrID: {csriri}')
+                print(f'Error two or more Individuals with csrID: {instance_iri}')
                 return statement[0]
             elif len(statements) == 1:
-                print(f'Found CSR with csrID: {csriri}')
+                print(f'Found CSR with csrID: {instance_iri}')
                 return statement[0]
             
-    print(f'No CSR with csrID: {csriri}')
+    print(f'No Instance with ID: {instance_iri}')
     return None
 
 
 
 def find_property(prop_str):
-    iri_str = makeCSRIRIstr(prop_str)
-    prop = conn.createURI(iri_str)
+    # iri_str = make_domain_ont_str(prop_str)
+    prop = conn.createURI(prop_str)
     for _ in conn.getStatements(prop, RDF.TYPE, owl_datatype_property):
         return prop
-    print(f'Error {prop_str} is not a data property')
+    print(f'Error {prop} is not a data property')
     return None
 
 # Reads a CSV file where the first line is a list of properties
@@ -73,26 +77,15 @@ def read_csv(path):
                     i += 1
                 line_count += 1
                 print(f'prop list: {proplist}')
-            # elif findCSR(row[0]) is not None:
-            #     # For subsequent rows there are two conditions: either the Individual already exists (in which case
-            #     # the fingNGO FTI will find it) that is this condition
-            #     print(f'Found CSR Line {line_count}')
-            #     found_csr = findCSR(row[0])
-            #     while i < row_count:
-            #         nextval = row[i]
-            #         if nextval != "":
-            #             conn.add(found_csr, proplist[i-1], nextval)
-            #         i += 1
-            #     line_count += 1
             else:
                 # If the Individual doesn't exist then it will be created
-                print(f'New CSR Line {line_count}')
+                print(f'New Object Line {line_count}')
                 new_csr_iri = conn.createURI(
-                    'http://www.semanticweb.org/mdebe/ontologies/NGO#' +  str(uuid.uuid4()))
-                conn.add(new_csr_iri, RDF.TYPE, CSRClass)
+                    domain_ont_str +  str(uuid.uuid4()))
+                conn.add(new_csr_iri, RDF.TYPE, file_class)
                 conn.add(new_csr_iri, RDF.TYPE, owl_named_individual)
-                print(f'New NGO {new_csr_iri}')
-                while i < row_count: 
+                print(f'New individual {new_csr_iri}')
+                while i < row_count:
                     nextval = row[i]
                     if nextval != "":
                         conn.add(new_csr_iri, proplist[i], nextval)
@@ -105,4 +98,4 @@ def read_csv(path):
 read_csv(bpath)
 
 
-# findNGO("NGO200000014")
+
