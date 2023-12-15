@@ -5,7 +5,7 @@ import csv
 import uuid
 
 conn = ag_connect('DrMo', host='localhost', port='10035',
-                  user='xxxxx', password='xxxxx')
+                  user='mdebellis', password='df1559')
 domain_ont_str = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#"
 
 
@@ -14,7 +14,9 @@ def make_domain_ont_str (inputstr):
 
 owl_named_individual = conn.createURI("http://www.w3.org/2002/07/owl#NamedIndividual")
 owl_datatype_property = conn.createURI("http://www.w3.org/2002/07/owl#DatatypeProperty")
-bpath = "ce12-6-23.csv"
+owl_annotation_property = conn.createURI("http://www.w3.org/2002/07/owl#AnnotationProperty")
+
+bpath = "CRSC12-13-23.csv"
 # file_class is the IRI for the class that the properties in the csv file apply to. I.e.,
 # when parsing the file, the system will search for an instance of that class and if one is
 # not found, then it will be created.
@@ -44,7 +46,9 @@ def find_property(prop_str):
     prop = conn.createURI(prop_str)
     for _ in conn.getStatements(prop, RDF.TYPE, owl_datatype_property):
         return prop
-    print(f'Error {prop} is not a data property')
+    for _ in conn.getStatements(prop, RDF.TYPE, owl_annotation_property):
+        return prop
+    print(f'Error {prop} is not a property')
     return None
 
 # Reads a CSV file where the first line is a list of properties
@@ -54,7 +58,7 @@ def find_property(prop_str):
 # 2) Find the range of the data property if it exists and coerce the literal into that datatype if the
 # data property doesn't exist or the literal can't be coerced signal an error.
 def read_csv(path):
-    with open(path, mode='r', encoding='utf-8') as csv_file:
+    with open(path, mode='r', encoding='utf-8', errors='ignore') as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         proplist = []
