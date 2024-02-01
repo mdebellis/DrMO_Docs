@@ -10,3 +10,5 @@ The file match.py uses the AllegroGraph FTI capability to match documents to con
 A better approach is needed: 1) Either use Named Entity Recognition in Spacy or 2) Vector embedding with an Open AI LLM
 The parse_authors.py file is a very rough first cut at processing the author strings and turning them into instances of the 
 Person class with appropriate values. E.g., the Document hasAuthor the Author. 
+Currently the ontology is stored in the same top level directory as the Python files. Should probably change that but I want to leave
+that one file because I gave a support person at AllegroGraph that URL to debug a problem I'm having with creating LLM vector embeddings. 
