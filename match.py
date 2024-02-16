@@ -36,7 +36,6 @@ all_stop_words = stop_words1.union(stop_words2)
 conn.createFreeTextIndex("DOC-INDEX", predicates=[keyword_property, abstract_property], stopWords=all_stop_words, wordFilters=["stem.english"])
 
 def create_topic_links():
-
     for concept_statement in conn.getStatements(None, rdf_type, skos_concept_class):
         concept = concept_statement[0]
         concept_labels = conn.getStatements(concept, label_property, None)
