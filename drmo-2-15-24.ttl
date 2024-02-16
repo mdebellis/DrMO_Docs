@@ -15,7 +15,7 @@
 @prefix skos: <http://www.w3.org/2004/02/skos/core#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix keyword: <http://franz.com/ns/keyword#> .
-@base <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo> .
+@base <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#> .
 
 <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo> rdf:type owl:Ontology ;
                                                                      dcterms:contributor "Michael DeBellis mdebellissf@gmail.com" ;
@@ -20465,7 +20465,7 @@ Dentin Radioopacity =1""" ;
 :ThermalProperty rdfs:label "Thermal Property" .
 
 
-:ToBeClassified rdfs:comment "This is a temporary class. I'm using it to identify papers that I need help classifying, where I think we may need additional concepts in the ontology. MD" ;
+:ToBeClassified rdfs:comment "This is a temporary class. I'm using it to identify papers that I need help classifying, where I think we may need additional concepts addded to the ontology. MD" ;
                 rdfs:label "To Be Classified" .
 
 
