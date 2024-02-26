@@ -5,8 +5,7 @@ from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 from franz.openrdf.query.query import QueryLanguage
 
-conn = ag_connect('drmo', host='localhost', port='10035',
-                               user='mdebellis', password='df1559')
+conn = ag_connect('drmo', host='localhost', port='10035', user='mdebellis', password='df1559')
 
 query_string = "PREFIX franzOption_openaiApiKey: <franz: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> "
 query_string = query_string + "PREFIX drmo: <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#> "
@@ -28,7 +27,7 @@ st.title('Dental Materials and Products Portal')
 
 question = "Does AB restorative in Class II cavities without adhesive system, result in an acceptable failure frequency after a one-year period?"
 answer = "No, the use of AB restorative in Class II cavities without an adhesive system resulted in a very high failure frequency after a one-year period."
-dentistInput = st.text_area("Text entry example...", value=question, height=None, max_chars=None,
+dentistInput = st.text_area("Enter question here:", value=question, height=None, max_chars=None,
              key=None, help=None, on_change=None, args=None, 
              kwargs=None, placeholder="Text entry example", disabled=False, 
              label_visibility="visible")
@@ -43,5 +42,5 @@ st.page_link("http://127.0.0.1:10035", label="View answer graph in Gruff", icon=
 #st.write("This is what the first text box entered " + str(dentistInput))
 #st.write("This is what the second box wrote " + str(sparqlQuery))
 
-# streamlit run C:\Users\mdebe\Documents\GitHub\DrMO_Docs\dentistTest.py
+# streamlit run C:\Users\mdebe\Documents\GitHub\DrMO_Docs\drmo_basic_ui.py
 
