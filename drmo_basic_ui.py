@@ -7,34 +7,48 @@ from franz.openrdf.query.query import QueryLanguage
 
 conn = ag_connect('drmo', host='localhost', port='10035', user='mdebellis', password='df1559')
 
-query_string = "PREFIX franzOption_openaiApiKey: <franz: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> "
-query_string = query_string + "PREFIX drmo: <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#> "
-query_string = query_string + "PREFIX llm: <http://franz.com/ns/allegrograph/8.0.0/llm/> "
-query_string = query_string + "SELECT  ?response ?author ?citation ?content WHERE {bind(\"What are sources of mercury vapor inhalation?\" as ?query) "
-query_string = query_string + "(?response ?score ?citation ?content) llm:askMyDocuments (?query \"drmo\" 2 0.8). ?citation drmo:hasAuthor ?author.} "
 
-def do_query():
-    tuple_query = conn.prepareTupleQuery(QueryLanguage.SPARQL, query_string)
-    result = tuple_query.evaluate()
-    with result:
-        for binding_set in result:
-            response = binding_set.getValue("response")
-            print(response)
+question = ""
 
 
+def do_query(user_question):
+    if user_question == None:
+        return ""
+    else:
+        query_string = build_query(str(user_question))
+        tuple_query = conn.prepareTupleQuery(QueryLanguage.SPARQL, query_string)
+        result = tuple_query.evaluate()
+        with result:
+            for binding_set in result:
+                response = binding_set.getValue("response")
+                return response
 
+def build_query(user_question):
+    print("In build query")
+    if user_question == "":
+        return ""
+    else:
+        query_string1 = "PREFIX Open AI Key Goes Here "
+        query_string1 = query_string1 + "PREFIX drmo: <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#> "
+        query_string1 = query_string1 + "PREFIX llm: <http://franz.com/ns/allegrograph/8.0.0/llm/> "
+        query_string1 = query_string1 + "SELECT  * WHERE {bind(\"" + user_question
+        query_string2 = "\" as ?query) "
+        query_string2 = query_string2 + "(?response ?score ?citation ?content) llm:askMyDocuments (?query \"drmo\" 2 0.8). ?citation drmo:hasAuthor ?author.} "
+        query_string = query_string1 + question + query_string2
+        return query_string
+
+#print(do_query("Does AB restorative in Class II cavities without adhesive system, result in an acceptable failure frequency after a one-year period?"))
 st.title('Dental Materials and Products Portal')
 
-question = "Does AB restorative in Class II cavities without adhesive system, result in an acceptable failure frequency after a one-year period?"
-answer = "No, the use of AB restorative in Class II cavities without an adhesive system resulted in a very high failure frequency after a one-year period."
-dentistInput = st.text_area("Enter question here:", value=question, height=None, max_chars=None,
+
+question = st.text_area("Enter question here:", value=None, height=None, max_chars=None,
              key=None, help=None, on_change=None, args=None, 
              kwargs=None, placeholder="Text entry example", disabled=False, 
              label_visibility="visible")
 
-sparqlQuery = st.text_area("Answer:", value=answer , height=None, max_chars=None,
+sparqlQuery = st.text_area("Answer:", value=do_query(question), height=None, max_chars=None,
              key=None, help=None, on_change=None, args=None, 
-             kwargs=None, placeholder="SPARQL Query for: " + str(dentistInput), disabled=False,
+             kwargs=None, placeholder="SPARQL Query for: " + str(question), disabled=False,
              label_visibility="visible")
 
 st.page_link("http://127.0.0.1:10035", label="View answer graph in Gruff", icon=None, help=None, disabled=False, use_container_width=None)

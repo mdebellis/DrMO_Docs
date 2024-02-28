@@ -8036,6 +8036,12 @@ dcterms:title rdf:type owl:DatatypeProperty ;
                                rdfs:subClassOf :GlassIonomerCement .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ResinBasedComposite
+:ResinBasedComposite rdf:type owl:Class ;
+                     rdfs:subClassOf :DentalMaterial ;
+                     rdfs:label "Resin Based Composite" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ResinBasedCompositeProduct
 :ResinBasedCompositeProduct rdf:type owl:Class ;
                             rdfs:subClassOf :DDRMProductByComposition ,
@@ -8055,11 +8061,6 @@ dcterms:title rdf:type owl:DatatypeProperty ;
                                               owl:onProperty :needToothSurfacePreparation ;
                                               owl:hasValue :AcidEthchedAndBlottedDry
                                             ] .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ResinComposite
-:ResinComposite rdf:type owl:Class ;
-                rdfs:subClassOf :DentalMaterial .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#RestorationMaterialProduct
@@ -20463,9 +20464,6 @@ Dentin Radioopacity =1""" ;
 
 
 :ResinBasedCompositeProduct rdfs:label "Resin Based Composite Product" .
-
-
-:ResinComposite rdfs:label "Resin Composite" .
 
 
 :RestorationMaterialProduct rdfs:label "Restoration Material Product" .
