@@ -51,9 +51,9 @@ sparqlQuery = st.text_area("Answer:", value=do_query(question), height=None, max
              kwargs=None, placeholder="SPARQL Query for: " + str(question), disabled=False,
              label_visibility="visible")
 
-st.page_link("http://127.0.0.1:10035", label="View answer graph in Gruff", icon=None, help=None, disabled=False, use_container_width=None)
+st.page_link("http://localhost:10035/gruff/43245/", label="View answer graph in Gruff", icon=None, help=None, disabled=False, use_container_width=None)
 
-#st.write("This is what the first text box entered " + str(dentistInput))
+g#st.write("This is what the first text box entered " + str(dentistInput))
 #st.write("This is what the second box wrote " + str(sparqlQuery))
 
 # streamlit run C:\Users\mdebe\Documents\GitHub\DrMO_Docs\drmo_basic_ui.py
