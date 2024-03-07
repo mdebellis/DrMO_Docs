@@ -101,11 +101,13 @@ skos:prefLabel rdf:type owl:AnnotationProperty ;
 
 
 ###  http://purl.obolibrary.org/obo/has_prefix
-<http://purl.obolibrary.org/obo/has_prefix> rdf:type owl:ObjectProperty .
+<http://purl.obolibrary.org/obo/has_prefix> rdf:type owl:ObjectProperty ;
+                                            rdfs:label "has Prefix" .
 
 
 ###  http://purl.obolibrary.org/obo/is_unit_of
-<http://purl.obolibrary.org/obo/is_unit_of> rdf:type owl:ObjectProperty .
+<http://purl.obolibrary.org/obo/is_unit_of> rdf:type owl:ObjectProperty ;
+                                            rdfs:label "is Unit Of" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#availableAs
@@ -242,6 +244,14 @@ skos:prefLabel rdf:type owl:AnnotationProperty ;
                         rdfs:label "has Moisture Sensitivity" .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#hasNextSection
+:hasNextSection rdf:type owl:ObjectProperty ;
+                owl:inverseOf :isPreviousSectionOf ;
+                rdfs:domain :Section ;
+                rdfs:range :Section ;
+                rdfs:label "has Next Section" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#hasParticipants
 :hasParticipants rdf:type owl:ObjectProperty ;
                  owl:inverseOf :participatesIn ;
@@ -255,6 +265,14 @@ skos:prefLabel rdf:type owl:AnnotationProperty ;
                     rdfs:domain :RestorationMaterialProduct ;
                     rdfs:range :PolishRetentibility ;
                     rdfs:label "has Polish Retension" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#hasSubSection
+:hasSubSection rdf:type owl:ObjectProperty ;
+               owl:inverseOf :isSubSectionOf ;
+               rdfs:domain <http://purl.obolibrary.org/obo/IAO_0000030> ;
+               rdfs:range :Section ;
+               rdfs:label "has Sub Section" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#hasSurfacePolishability
@@ -374,6 +392,17 @@ skos:prefLabel rdf:type owl:AnnotationProperty ;
                              rdfs:label "is More Moisture Sensitive Than" .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#isPreviousSectionOf
+:isPreviousSectionOf rdf:type owl:ObjectProperty ;
+                     rdfs:label "is Previous Section Of" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#isSubSectionOf
+:isSubSectionOf rdf:type owl:ObjectProperty ;
+                rdfs:domain :Section ;
+                rdfs:label "is Sub Section Of" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#manufacturedBy
 :manufacturedBy rdf:type owl:ObjectProperty ,
                          owl:FunctionalProperty ;
@@ -445,17 +474,6 @@ skos:prefLabel rdf:type owl:AnnotationProperty ;
                         rdfs:domain <http://purl.obolibrary.org/obo/OHD_0000012> ;
                         rdfs:range :DentalMaterialProduct ;
                         rdfs:label "suitable Dental Material" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/hasSubSection
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/hasSubSection> rdf:type owl:ObjectProperty ;
-                                                                                  owl:inverseOf <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/isSubSectionOf> ;
-                                                                                  rdfs:domain <http://purl.obolibrary.org/obo/IAO_0000030> ;
-                                                                                  rdfs:range <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Section> .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/isSubSectionOf
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/isSubSectionOf> rdf:type owl:ObjectProperty .
 
 
 #################################################################
@@ -597,6 +615,12 @@ dcterms:title rdf:type owl:DatatypeProperty ;
 :cochraneGroupCode rdf:type owl:DatatypeProperty ;
                    rdfs:subPropertyOf dcterms:identifier ;
                    rdfs:label "cochrane Group Code" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#content
+:content rdf:type owl:DatatypeProperty ;
+         rdfs:domain <http://purl.obolibrary.org/obo/IAO_0000030> ;
+         rdfs:label "content" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#datePublished
@@ -746,11 +770,6 @@ dcterms:title rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#product
 :product rdf:type owl:DatatypeProperty ;
          rdfs:label "product" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/content
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/content> rdf:type owl:DatatypeProperty ;
-                                                                            rdfs:domain <http://purl.obolibrary.org/obo/IAO_0000030> .
 
 
 #################################################################
@@ -7061,6 +7080,11 @@ dcterms:title rdf:type owl:DatatypeProperty ;
           rdfs:subClassOf :MechanicalProperty .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#High
+:High rdf:type owl:Class ;
+      rdfs:subClassOf :QualitativeMeasurement .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#HighCopperAdmixed
 :HighCopperAdmixed rdf:type owl:Class ;
                    rdfs:subClassOf :DentalAmalgamPowder .
@@ -7238,6 +7262,12 @@ dcterms:title rdf:type owl:DatatypeProperty ;
                        rdfs:subClassOf :ManufacturerSupplyMode .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Low
+:Low rdf:type owl:Class ;
+     rdfs:subClassOf :QualitativeMeasurement ;
+     rdfs:label "Low" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#LowOcclusalClearance
 :LowOcclusalClearance rdf:type owl:Class ;
                       rdfs:subClassOf :OcclusalClearanceFactor .
@@ -7402,6 +7432,12 @@ dcterms:title rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Matrix
 :Matrix rdf:type owl:Class ;
         rdfs:subClassOf :ActiveIngredient .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Maximum
+:Maximum rdf:type owl:Class ;
+         rdfs:subClassOf :QualitativeMeasurement ;
+         rdfs:label "Maximum" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Measurement
@@ -7589,6 +7625,17 @@ dcterms:title rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#MicromechanicalBonding
 :MicromechanicalBonding rdf:type owl:Class ;
                         rdfs:subClassOf <http://purl.obolibrary.org/obo/OHD_0000038> .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Minimum
+:Minimum rdf:type owl:Class ;
+         rdfs:subClassOf :QualitativeMeasurement .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Moderate
+:Moderate rdf:type owl:Class ;
+          rdfs:subClassOf :QualitativeMeasurement ;
+          rdfs:label "Moderate" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ModerateAestheticDDRM
@@ -8094,6 +8141,13 @@ dcterms:title rdf:type owl:DatatypeProperty ;
                                :MedicalInformationEntity .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Section
+:Section rdf:type owl:Class ;
+         rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000030> ;
+         rdfs:comment "For documents that are divided up into sections. This should never stand alone, should always be subSection of an Information Content Entity (either of a Document or another Section)" ;
+         rdfs:label "Section" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#SemidirectResorationProcedure
 :SemidirectResorationProcedure rdf:type owl:Class ;
                                rdfs:subClassOf <http://purl.obolibrary.org/obo/OHD_0000004> .
@@ -8497,37 +8551,6 @@ dcterms:title rdf:type owl:DatatypeProperty ;
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ZincOxideNonEugenolProduct
 :ZincOxideNonEugenolProduct rdf:type owl:Class ;
                             rdfs:subClassOf :CementProduct .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/High
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/High> rdf:type owl:Class ;
-                                                                         rdfs:subClassOf :QualitativeMeasurement .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Low
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Low> rdf:type owl:Class ;
-                                                                        rdfs:subClassOf :QualitativeMeasurement .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Maximum
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Maximum> rdf:type owl:Class ;
-                                                                            rdfs:subClassOf :QualitativeMeasurement .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Minimum
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Minimum> rdf:type owl:Class ;
-                                                                            rdfs:subClassOf :QualitativeMeasurement .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Moderate
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Moderate> rdf:type owl:Class ;
-                                                                             rdfs:subClassOf :QualitativeMeasurement .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Section
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Section> rdf:type owl:Class ;
-                                                                            rdfs:subClassOf <http://purl.obolibrary.org/obo/IAO_0000030> ;
-                                                                            rdfs:comment "For documents that are divided up into sections. This should never stand alone, should always be subSection of an Information Content Entity (either of a Document or another Section)" .
 
 
 ###  http://www.w3.org/2004/02/skos/core#Concept
@@ -9944,6 +9967,12 @@ skos:Concept rdf:type owl:Class .
              rdfs:label "AC Fernandes" .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ACTIVABioactive
+:ACTIVABioactive rdf:type owl:NamedIndividual ,
+                          :DentalMaterialProduct ;
+                 rdfs:label "ACTIVA Bioactive" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ACovaci
 :ACovaci rdf:type owl:NamedIndividual ,
                   <http://www.w3.org/ns/prov#Person> ;
@@ -10413,6 +10442,171 @@ skos:Concept rdf:type owl:Class .
                            skos:Concept .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Bulk-filled_posterior_resin_restorations
+:Bulk-filled_posterior_resin_restorations rdf:type owl:NamedIndividual ,
+                                                   :JournalArticle ;
+                                          :hasAuthor :JWvanDijken ;
+                                          :publishedIn :EuropeanJournalOfOralSources ;
+                                          dcterms:abstract "This randomized study evaluated a flowable resin composite bulk-fill technique in posterior restorations and compared it intraindividually with a conventional 2-mm resin composite layering technique over a 6-yr follow-up period. Thirty-eight pairs of Class II restorations and 15 pairs of Class I restorations were placed in 38 adults. In all cavities a single-step self-etch adhesive (Xeno V) was applied. In the first cavity of each pair, the flowable resin composite (SDR) was placed, in bulk increments of up to 4 mm. The occlusal part was completed with a layer of nanohybrid resin composite (Ceram X mono). In the second cavity of each pair, the hybrid resin composite was placed in 2-mm increments. The restorations were evaluated using slightly modified US Public Health Service (USPHS) criteria at baseline and then annually for a time period of 6 yr. After 6 yr, 72 Class II restorations and 26 Class I restorations could be evaluated. Six failed Class II molar restorations, three in each group, were observed, resulting in a success rate of 93.9% for all restorations and an annual failure rate (AFR) of 1.0% for both groups. The AFR for Class II and Class I restorations in both groups was 1.4% and 0%, respectively. The main reason for failure was resin composite fracture." ;
+                                          dcterms:title "Bulk-filled posterior resin restorations based on stress-decreasing resin technology: a randomized, controlled 6-year evaluation" ;
+                                          rdfs:label "Bulk-filled posterior resin restorations based on stress-decreasing resin technology: a randomized, controlled 6-year evaluation" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#BulkResinConclusion
+:BulkResinConclusion rdf:type owl:NamedIndividual ,
+                              :Section ;
+                     <http://purl.org/ontology/bibo/section> "5" ;
+                     :content "Within the limited scope of the current in vitro study, it can be concluded that the wear of bulk-fill composites is significantly higher than the wear of a conventional nanohybrid composite resin. Furthermore, the study shows that, if the bulk-fill composite is covered with a thin layer of conventional resin composites, the wear of the latter is not influenced by underlying layer of the bulk-fill composite. The bulk-fill materials can be expected to perform satisfactorily in small restorations, but not in stress bearing areas and in heavy wear situations." ;
+                     rdfs:label "Bulk Resin Conclusion" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#BulkResinDiscussion
+:BulkResinDiscussion rdf:type owl:NamedIndividual ,
+                              :Section ;
+                     <http://purl.org/ontology/bibo/section> "4" ;
+                     :content """The aim of this study was to elucidate the wear mechanism of bulk-fill / conventional hybrid composite layered system. It was expected that the bulk-fill composite beneath the layer of the conventional hybrid composite would lead to lower wear resistance in comparison to the conventional hybrid composite. This hypothesis was rejected because there was no convincing evidence that underlying bulk-fill materials influenced the wear rate of the conventional hybrid composite layer. Apparently, the underlying bulk-fill materials are stiff enough to allow an even distribution of the surface stress and act as a monoblock of GDO.
+
+The wear rate of the bulk-fill composites themselves was higher than in most of the restoratives. The three-body wear in general is about 20 µm / 200,000 cycles for ceramics, enamel, and posterior resin composites and 30–60 µm / 200,000 cycles for most of the other conventional hybrid composites [11], [12]. The wear rate of glass-ionomer cement and resin composite materials for temporary restorations like Protemp 4 is approximately 100 µm / 200,000 cycles. Due to their high wear rate, such materials must be considered as materials suitable for temporary restorations [13]. The SDR bulk-fill resin composite showed a wear rate similar to that of temporary filling materials as their level of wear is approximately 120 µm / 200,000 cycles. The wear rate of the other bulk-fill resin composites was lower, but not good enough to be applied in stress-bearing areas, such as in large posterior restorations and in the case of patients with parafunctional habits, such as bruxism. Table 3.
+
+Table 3. Mean Vickers hardness (VH) and the standard deviation in parenthesis.
+
+Material	Vickers hardness
+GDO
+SDR
+XBA
+FUP
+FBFL	124 (6)a
+45 (2)d
+70 (3)b
+62 (2)c
+40 (1)e
+Different lowercase letters indicate significant differences (P < 0.05) between the materials.
+
+
+In general, differences in wear between the composite resins used, are largely related to the volume of filler particles and their distribution, matrix properties, the degree of conversion, and the bond between the matrix and the filler. Previously, we showed a strong correlation for the wt% of filler and wear rates of different types of restorative composites [14]. In this study we found strong correlations for the wt% and the hardness, but the highest correlation was found for the vol% of the filler content. The vol% of filler content is also related to the E-modulus, e.g. a high E-modulus results in low stress during loading and less deformation and subsequently a lower wear rate.
+
+The low modulus of elasticity of bulk-fill resin composites has the advantage of being able to reduce the polymerization shrinkage stress within the composite, but at the same time will lead to more deformation and fatigue wear both to the restoration and the remaining tooth structure when the restoration is loaded. The deformation of the remaining tooth structure is directly related to the size of restoration, e.g. the larger restorations will result in more deformation. Furthermore, bulk-fill composites will have a higher water uptake as the resin content is higher compared to conventional composites. This makes bulk-fill composites more prone to deterioration.
+
+Restorations are not only subjected to occlusal wear but most multisurface posterior restorations will also demonstrate proximal wear. To reduce occlusal wear of a flowable bulk-fill composite, an occlusal layer of a conventional type of restorative composite is applied. However, interproximal the flowable will come at the surface and in approximal contact. Approximal wear of teeth and restorative materials will occur as a result of the mesial drift [15]. A rapidly wearing approximal contact will change the position of the tooth and the shape of the approximal contour. This is a clinical problem, which is difficult to predict or simulate, but the high wear rate of bulk-fill composites is not in favor of this phenomenon.
+
+LePrince and others showed that the physical properties of bulk-fill composites are lower than in the case of a conventional nanohybrid composite resin. The present study demonstrates that the wear of bulk-fill materials is relatively high [5]. However, small restorations can be done in one-step if the applied forces are low and a semi-permanent restoration is required. Based on these results they are suitable for restoring primary teeth.
+
+In the case of restoring permanent teeth, a longer survival of the restorations is beneficial. If the modest gain in time (especially if a bulk-fill material has to be covered with a layer of conventional composite) is more important than a higher quality of the restoration, but it is something that needs to be discussed with the patient.""" ;
+                     rdfs:label "Bulk Resin Discussion" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#BulkResinIntroduction
+:BulkResinIntroduction rdf:type owl:NamedIndividual ,
+                                :Section ;
+                       :hasNextSection :BulkResinMaterialsAndMethods ;
+                       <http://purl.org/ontology/bibo/section> "1" ;
+                       :content """Bulk-fill resin composites have gained popularity in the recent years thanks to their improved depth of cure. This is the result of incorporating larger filler particles, reducing the amount of pigments, and changing the monomer systems of the composites. These bulk-fill resin composites can be applied and cured in thicker layers than conventional resin composites [1]. Nevertheless, polymerization shrinkage stress, induced by the activation of the methacrylate-based monomers, may cause post-operative sensitivity and marginal leakage, increasing the risk for secondary caries [2].
+
+Bulk-fill resin composites were introduced by being applied in one layer up to three times the thickness of the conventional resin composites [3], [4]. At present there are two types of bulk-fill resin composites: (1) flowable composite, which requires an additional layer of a conventional resin composite for the occlusal surface; and (2) composites with a normal consistency suitable to complete the whole restoration. There is a growing group of practitioners who choose bulk-fill resin composites for the reduction of working time. For them the esthetic qualities of the material is less important as bulk-fill materials are highly translucent to facilitate transmission of light to enable polymerization of the deepest parts of the restoration. The high translucency results in a greyish shade of the restoration that may hamper the esthetics. Furthermore, the flowering of the filler content of the bulk-fill resin composite required to facilitate light transmission, will affect the mechanical properties and durability of the material, as a higher filler content is accompanied by mechanical properties [5], [6]. The latest generations of bulk-fill resin composites have increased the filler content and claim to have improved mechanical properties, which would make these materials even more suitable for large posterior restorations than the traditional resin composites [7]. Recent studies evaluating the mechanical resistance against abrasion or fracture toughness of bulk-fill resin composites, did not show any improvement in comparison with conventional resin composites [8]. The clinical longevity of a composite restoration also depends on its resistance against wear and fracture.
+
+To provide more insight into the wear of bulk-fill materials this investigation focusses on the mechanism of surface wear of bulk-fill materials in a single layer and with a top layer. Surface wear and fatigue are the result of moving and sliding contacts during cyclic loading. The localized stresses that are generated by direct contacts between occlusal surfaces are located slightly below the surface [9], [10]. These subsurface stresses are considered an important factor in surface fatigue, which initiates the subsurface cracks, eventually leading to extensive surface damage and resulting in high wear rates. As the deformation and the stresses depend on the rigidity or flexibility of the supporting material in the layered system, one might expect a higher wear rate if the supporting material is more flexible, and a lower wear rate if the supporting material is relatively stiff and reduces deformation of the top layer. Therefore, three different configurations were evaluated: (1) bulk-fill material (low E-modulus) with 0.5 mm a traditional hybrid composite (high E-modulus), (2) bulk-fill material (low E-modulus) with a 1.0 mm traditional hybrid composite (high E-modulus) and wear rate of bulk-fill materials and traditional hybrid composite itself (Fig. 1).
+
+Fig. 1
+Download : Download high-res image (39KB)
+Download : Download full-size image
+Fig. 1. Schematic representation of the experimental set-up for three different configurations, where (1) is a bulk-fill composite covered with 0.5 mm conventional composite (2) a bulk-fill composite covered with 0.5 mm conventional composite and (3) the pure bulk-fill composite.
+
+The aim of the in vitro study was to provide information about the wear mechanism of bulk-fill / traditional hybrid composite layer systems and the intrinsic wear rate of the bulk-fill resin and traditional hybrid composites. The null hypothesis of this study was that there are significant differences between the wear rate of the conventional hybrid composite layer applied on the bulk-fill composites.""" ;
+                       rdfs:label "Bulk Resin Introduction" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#BulkResinMaterialsAndMethods
+:BulkResinMaterialsAndMethods rdf:type owl:NamedIndividual ,
+                                       :Section ;
+                              :hasNextSection :BulkResinResults ;
+                              <http://purl.org/ontology/bibo/section> "2" ;
+                              :content """The materials used in the study, their manufacturers, and batch numbers are shown in Table 1. All restoration materials were handled and cured according to the manufacturers’ instructions. The three-body wear was evaluated with a wear machine developed by the Academic Centre for Dentistry Amsterdam (ACTA) in accordance with ISO/TS 14569. In short, the ACTA wear machine was equipped with two wheels of different diameters: a specimen wheel with a diameter of 48 mm and a stainless steel antagonist wheel with a diameter of 19 mm. Both wheels rotated in the same direction at a different circumferential speed of 15%, inside a bowl, which contained a third body medium, consisting of a slurry of rice and millet seed shells (pH = 7). One wheel accommodated ten specimens and the antagonist wheel was pressed against the specimen wheel at a spring force of 15 N. Three experimental configurations were evaluated: (1) the bulk fill materials covered with 0.5 mm of the conventional composite (GDO), (2) the bulk fill materials covered with 1.0 mm of conventional composite (GDO), (3) the bulk fill materials with no coverage (see Fig. 1). The following procedure was performed for the two-layer specimen wheels: the metal part of the specimen wheel measuring 48 mm in diameter and two support wheels, with a diameter of 47 mm or 46 mm, respectively, were attached to the sides of the specimen wheel (Fig. 2). The compartment was filled with the composite and cured. Thereafter a 48 mm support wheel was attached to the sides of the specimen wheel and the covering layer of GDO was applied and cured.
+
+Table 1. Materials properties of materials used according to literature and manufacturers data.
+
+Code	Materials	Manufacturer	Fillers	Type	Cover	Batch
+GDO	Grandio	Vocoa	87% wt / 71 vol% Silica, Zirconia 0.075–0.6 µm	Nano-hybrid composite	–	1812451
+2021–09
+SDR	SDR Smart Dentin Replacement	Dentsplyb	68 wt% / 44 vol% Barium and strontium aluminofluoro silicate glass	Bulk-fill flowable composite	2 mm	1606024
+2018–06
+XBA	X-tra base	Vocoa	75 wt% / 58 vol%	Bulk-fill flowable composite	2 mm	1634112
+2018–11
+FUP	Fill-Up! Dual Curing Bulk Composite	Coltene-Whaledentc	65 wt% / 49 vol% Barium aluminofluoride borosilicate glass 0.1–5 µm	Bulk-fill flowable composite	2 mm	G85036
+2018–02
+FBFL	Filtek Bulk Fill	3 M-Esped	77 wt% / 58 vol% Zirconia, Silica 0.01–3.5 µm	Bulk-fill flowable composite	2 mm	N817704
+2019–10
+a Cuxhaven, Germany; b Konstanz, Germany; c Altstätten, Switzerland; d St. Paul, MN, USA.
+
+
+Fig. 2
+Download : Download high-res image (203KB)
+Download : Download full-size image
+Fig. 2. Graphical representation of the construction to develop wheels with specimens consisting of two different layers on top: 0.5 mm and 1.0 mm.
+
+The wear experiments were conducted after three days and one month, and the specimen wheel was stored in water at RT during the whole experiment. An experimental run consisted of 200,000 cycles (55½ h) of the specimen wheel rotating at the speed of 1 Hz. After each run, 10 tracings (n = 10) were taken at fixed positions on the worn-down surface of the specimens (PRK profilometer No. 20702, Perthen GmbH, Hannover, Germany) to determine the loss of the material in µm. The average wear rate (ten tracings on two specimens; n = 20) and their standard deviations were calculated from these profiles.
+
+The Vickers Hardness of the surface of the composites was evaluated with a micro hardness test. Five indentations were made in each specimen with a Vickers diamond indenter under 20 N load and a dwell time of 20 s. Hardness values (GPa) were calculated according to the equation H = P / 2d2, where P is the load in Newtons and is the average of the diagonal values.
+
+Two-way ANOVA was used to test for significant differences in wear rate and materials and the experimental configuration. One-way ANOVA and Tukey’s post hoc test (P < 0.05) were applied to test for significant differences in wear rate within materials, experimental configuration, and for the Vicker Hardness test. Independent t-tests were used to compare the wear rate at different time intervals. The linear correlation coefficients between wt%, vol% and Vickers hardness and wear rate were also calculated. The software used was SPSS * * (SPSS, Chicago, IL, USA).""" ;
+                              rdfs:label "Bulk Resin Materials And Methods" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#BulkResinResults
+:BulkResinResults rdf:type owl:NamedIndividual ,
+                           :Section ;
+                  :hasNextSection :BulkResinDiscussion ;
+                  <http://purl.org/ontology/bibo/section> "3" ;
+                  :content """The wear rates are summarized in Table 2. Two-way ANOVA statistical test showed that the type of material (F3 days = 1428.9; F1 month = 1145.5; P < 0.001), configuration (F3 days = 9139.5; F1 month = 9137.9; P < 0.001) and their interaction (F3 days = 1372.5; F1 month = 1135.5; P < 0.001) had a signiﬁcant effect on the wear rate after three days and 30 days. Independent t-test showed that all the wear rates recorded after three days were significantly higher than the one taken after one month (P < 0.05).
+
+Table 2. The wear rate (in μm / 200.000 rev) and the standard deviation in parenthesis after three days and one month for four bulk-fill composites and one nano-hybrid composite at two different times depending on the configuration of the experiment.
+
+Material (three days)	0.5 mm GDO	1.0 mm GDO	No Cover
+GDO
+SDR
+XBA
+FUP
+FBFL	32.0 (0.8)Aa
+32.6 (1.3)Aa
+31.7 (1.6)Aa
+32.0 (1.5)Aa
+32.0 (1.4)Aa	29.3 (1.0)Ba
+30.5 (1.4)Ab
+31.6 (1.1)Ab
+32.8 (1.1)Ac
+31.3 (1.5)Ab	31.4 (0.6)Aa
+118.4 (6.0)Bd
+60.5 (2.0)Bb
+59.3 (2.7)Bb
+69.7 (2.7)Bc
+Material (one month)	0.5 mm GDO	1.0 mm GDO	No Cover
+GDO
+SDR
+XBA
+FUP
+FBFL	22.1 (0.8)Abc
+22.3 (1.4)Bc
+21.2 (2.0)Abc
+21.1 (0.8)Ab
+21.6 (0.5)Bbc	20.0 (0.8)Bde
+20.3 (0.8)Ade
+22.4 (6.0)Ae
+20.5 (1.1)Ade
+19.5 (0.7)Ad	22.3 (0.9)Ae
+96.3 (3.2)Ch
+49.0 (1.2)Bf
+48.5 (1.7)Bf
+59.3 (1.4)Cg
+Different lowercase letters indicate significant differences (P < 0.05) between the materials.
+
+Different uppercase letters indicate significant differences (P < 0.05) between the configuration of the experiment.
+
+
+The average wear rate after three days was between 29.3 and 32.8 µm / 200.000 rev for the configurations (1) and (2), where the bulk-fill material was covered with conventional hybrid composite GDO. In most cases it was not significantly (P < 0.05) different from the wear rate of the hybrid composite GDO itself. If there was a significant difference, it was within 2 µm of the wear rate of GDO and clinically not relevant. The average wear rate of the bulk-fill materials after three days was between 59.3 and 118.4 µm / 200.000 rev for the uncovered bulk-fill composites configuration (3). All these wear rates were significantly higher than GDO (31.4 µm / 200.000 rev). The wear rate after three days was the highest for SDR and the lowest for FUP.
+
+The correlation coefficients between the wear rate (at day three) and the filler content in wt% and vol%, and the Vickers hardness were also calculated. The correlation coefficient for wt% and Vickers hardness was strong, with r = 0.645 and 0.758, respectively. For the filler content on vol% the correlation coefficients was very strong with r = 0.844.""" ;
+                  rdfs:label "Bulk Resin Results" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#BulkfilledCompositeProduct
 :BulkfilledCompositeProduct rdf:type owl:NamedIndividual ,
                                      skos:Concept .
@@ -10623,6 +10817,12 @@ skos:Concept rdf:type owl:Class .
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#CementProduct
 :CementProduct rdf:type owl:NamedIndividual ,
                         skos:Concept .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#CeramX
+:CeramX rdf:type owl:NamedIndividual ,
+                 :DentalMaterialProduct ;
+        rdfs:label "CeramX" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#CeramXmono
@@ -11075,7 +11275,8 @@ Conclusions: To reduce abrasion of the opposing resin composite surface the resi
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#DataPropertyFeatures
 :DataPropertyFeatures rdf:type owl:NamedIndividual ,
-                               skos:Concept .
+                               skos:Concept ;
+                      rdfs:label "Data Property Features" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Database
@@ -11086,6 +11287,17 @@ Conclusions: To reduce abrasion of the opposing resin composite surface the resi
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#DeciduousTeethCrownRestorationProcedure
 :DeciduousTeethCrownRestorationProcedure rdf:type owl:NamedIndividual ,
                                                   skos:Concept .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#DecisionMakingForCompromisedTeeth
+:DecisionMakingForCompromisedTeeth rdf:type owl:NamedIndividual ,
+                                            :JournalArticle ;
+                                   :hasAuthor :ACFernandes ;
+                                   dcterms:abstract "The objective of this study was to evaluate factors that may influence decision-making with regard to extraction or maintenance of periodontally compromised teeth. A questionnaire with 2 distinct clinical scenarios, each including a radiographic image, was provided to students in their final year of dental school and practicing dentists. The participants were asked to record the action that they would take in each case (tooth maintenance vs extraction) and provide a justification for their decision. The questionnaires were answered by 158 dental students and 57 dentists (N = 215). Among the sample as a whole, 31.16% of participants recommended extraction in scenario 1, while only 5.58% recommended that action in scenario 2. In scenario 1, there was a statistically significant difference in the recommendations of the dental students and the dentists, with the former group significantly more disposed to conservative action, that is, maintenance of the tooth (P < 0.001; chi-square test). When the actions recommended by participants specializing in implants or periodontics (or both) were compared with those recommended by other specialists, there was a statistically significant difference between the groups regarding maintenance and extraction (P = 0.012; Fisher exact test), with the former group recommending fewer extractions. When the responses were evaluated in terms of the participants' years of specialty practice, it was observed that professionals with fewer than 20 years of practice were more conservative in their decisions, choosing tooth maintenance significantly more often than specialists with longer experience (P = 0.031; Fisher exact test). Among the majority of both dental students and practicing dentists, the decision in both scenarios was to maintain the compromised teeth; however, the results suggested that that both the years of experience of the individual and the specialty of the practitioner can influence decision-making." ;
+                                   dcterms:title "Role of professional expertise in the decision-making process for periodontally compromised teeth" ;
+                                   <http://purl.org/ontology/bibo/uri> "https://pubmed.ncbi.nlm.nih.gov/35225808/"^^xsd:anyURI ;
+                                   :keywords "decision-making; dental implants; periodontal diseases; teaching methods." ;
+                                   rdfs:label "Role of professional expertise in the decision-making process for periodontally compromised teeth" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#DeepCaries
@@ -11400,6 +11612,12 @@ Conclusions: To reduce abrasion of the opposing resin composite surface the resi
 :EpilepticDentalPatient1 rdf:type owl:NamedIndividual ,
                                   :EpilepticDentalPatient ;
                          rdfs:label "EpilepticDentalPatient1" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#EuropeanJournalOfOralSources
+:EuropeanJournalOfOralSources rdf:type owl:NamedIndividual ,
+                                       :Journal ;
+                              rdfs:label "European Journal Of Oral Sources" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Evaluation
@@ -11842,8 +12060,7 @@ Conclusions: To reduce abrasion of the opposing resin composite surface the resi
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#High
-:High rdf:type owl:NamedIndividual ;
-      rdfs:label "High" .
+:High rdf:type owl:NamedIndividual .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#HighAestheticRequirement
@@ -11891,7 +12108,7 @@ Conclusions: To reduce abrasion of the opposing resin composite surface the resi
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#HighDurability
 :HighDurability rdf:type owl:NamedIndividual ,
                          :Durability ,
-                         <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/High> ;
+                         :High ;
                 rdfs:label "High Durability" .
 
 
@@ -11950,7 +12167,7 @@ Conclusion: It was concluded that there were no statistically significant differ
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#High_Cost
 :High_Cost rdf:type owl:NamedIndividual ,
                     :Cost ,
-                    <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/High> ;
+                    :High ;
            rdfs:label "High Cost" .
 
 
@@ -12752,7 +12969,7 @@ Conclusion: It was concluded that there were no statistically significant differ
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#LowDurability
 :LowDurability rdf:type owl:NamedIndividual ,
                         :Durability ,
-                        <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Low> ;
+                        :Low ;
                rdfs:label "Low Durability" .
 
 
@@ -12775,7 +12992,7 @@ Conclusion: It was concluded that there were no statistically significant differ
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Low_Cost
 :Low_Cost rdf:type owl:NamedIndividual ,
                    :Cost ,
-                   <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Low> ;
+                   :Low ;
           rdfs:label "Low Cost" .
 
 
@@ -13256,7 +13473,8 @@ Conclusion: It was concluded that there were no statistically significant differ
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ManufacturedObjectIndication
 :ManufacturedObjectIndication rdf:type owl:NamedIndividual ,
-                                       skos:Concept .
+                                       skos:Concept ;
+                              rdfs:label "Manufactured Object Indication" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Manufacturer
@@ -13271,7 +13489,8 @@ Conclusion: It was concluded that there were no statistically significant differ
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#MaterialFeatures
 :MaterialFeatures rdf:type owl:NamedIndividual ,
-                           skos:Concept .
+                           skos:Concept ;
+                  rdfs:label "Material Features" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#MaterialManipulation
@@ -13292,7 +13511,7 @@ Conclusion: It was concluded that there were no statistically significant differ
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#MaximumDurability
 :MaximumDurability rdf:type owl:NamedIndividual ,
                             :Durability ,
-                            <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Maximum> ;
+                            :Maximum ;
                    rdfs:label "Maximum Durability" .
 
 
@@ -13389,14 +13608,13 @@ Conclusion: It was concluded that there were no statistically significant differ
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Minimum
-:Minimum rdf:type owl:NamedIndividual ;
-         rdfs:label "Minimum" .
+:Minimum rdf:type owl:NamedIndividual .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#MinimumDurability
 :MinimumDurability rdf:type owl:NamedIndividual ,
                             :Durability ,
-                            <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Minimum> ;
+                            :Minimum ;
                    rdfs:label "Minimum Durability" .
 
 
@@ -13414,7 +13632,7 @@ Conclusion: It was concluded that there were no statistically significant differ
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ModerateDurability
 :ModerateDurability rdf:type owl:NamedIndividual ,
                              :Durability ,
-                             <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Moderate> ;
+                             :Moderate ;
                     rdfs:label "Moderate Durability" .
 
 
@@ -13432,7 +13650,7 @@ Conclusion: It was concluded that there were no statistically significant differ
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Moderate_Cost
 :Moderate_Cost rdf:type owl:NamedIndividual ,
                         :Cost ,
-                        <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Moderate> ;
+                        :Moderate ;
                rdfs:label "Moderate Cost" .
 
 
@@ -13667,7 +13885,8 @@ Patient with history of Eugenol allergy should avoid Restorative Material with E
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ObjectPropertyFeatures
 :ObjectPropertyFeatures rdf:type owl:NamedIndividual ,
-                                 skos:Concept .
+                                 skos:Concept ;
+                        rdfs:label "Object Property Features" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#OcclusalClearanceFactor
@@ -14013,6 +14232,16 @@ Clinical significance: Overal, packable resin composites are unlikely to show su
                             :Document ;
                    <http://purl.obolibrary.org/obo/BFO_0000050> :PhilipScienceOfDentalMaterials_12e ;
                    rdfs:label "Philip's Chapter 2" .
+
+
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Phosphoric_acid_bond_stability_of_resindentin_interface
+:Phosphoric_acid_bond_stability_of_resindentin_interface rdf:type owl:NamedIndividual ,
+                                                                  :JournalArticle ;
+                                                         :hasAuthor :ACFernandes ;
+                                                         dcterms:abstract "Proanthocyanidin (PA) is a promising dentin biomodifier due to its ability to stabilize collagen fibrils against degradation by matrix metalloproteinases (MMPs); however, the most effective protocol to incorporate PA into bonding procedures is still unclear. This study evaluated the effect of dentin biomodification with a PA acid etchant on MMP activity, adhesive interface morphology and resin-dentin microtensile bond strength. Sound extracted human molars were flattened to expose dentin and acid-etched for 15 s according to the groups: EXP - experimental phosphoric acid; EXP+PA - experimental phosphoric acid 10% PA; TE - total-etching system; SE - self-etching system. Samples were restored with composite resin and stored in distilled water (37ºC). MMP activity and interface morphology were analyzed after 24 h by in situ zymography (n=6) and scanning electron microscopy (n=3), respectively. The resin-dentin microtensile bond strength (μTBS) was evaluated after 24 h and 6 months storage (n=6). Significantly higher MMP activity was detected in etched dentin compared with untreated dentin (p<0.05), but no difference among acid groups was found. Resin tags and microtags, indicative of proper adhesive system penetration in dentinal tubules and microtubules, were observed along the hybrid layer in all groups. There was no difference in μTBS between 24 h and 6 months for EXP+PA; moreover, it showed higher long-term μTBS compared with TE and EXP (p<0.05). The results suggest that 15 s of biomodification was not sufficient to significantly reduce MMP activity; nonetheless, EXP+PA was still able to improve resin-dentin bond stability compared with total- and self-etching commercial systems." ;
+                                                         dcterms:title "Phosphoric acid containing proanthocyanidin enhances bond stability of resin/dentin interface" ;
+                                                         <http://purl.org/ontology/bibo/uri> "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9645179/"^^xsd:anyURI ;
+                                                         rdfs:label "Phosphoric acid containing proanthocyanidin enhances bond stability of resin/dentin interface" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Photopolymerization_Of_Monomer
@@ -14367,6 +14596,15 @@ Clinical significance: Overal, packable resin composites are unlikely to show su
                           skos:Concept .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Randomized3-yearClinicalEvaluationofClassIandIIPosteriorResinRestorations
+:Randomized3-yearClinicalEvaluationofClassIandIIPosteriorResinRestorations rdf:type owl:NamedIndividual ,
+                                                                                    :JournalArticle ;
+                                                                           :hasAuthor :JWvanDijken ;
+                                                                           dcterms:abstract "Purpose: To evaluate the 3-year clinical durability of the flowable bulk-fill resin composite SDR in Class I and Class II restorations. Materials and methods: Thirty-eight pairs of Class I and 62 pairs of Class II restorations were placed in 44 male and 42 female patients (mean age 52.4 years). Each patient received at least two extended Class I or Class II restorations that were as similar as possible. In all cavities, a one-step self-etching adhesive (XenoV+) was applied. One of the cavities of each pair was randomly assigned to receive the flowable bulk-fill resin composite SDR in increments up to 4 mm as needed to fill the cavity 2 mm short of the occlusal cavosurface. The occlusal part was completed with an ormocer-based nanohybrid resin composite (Ceram X mono+). In the other cavity, only the resin composite CeramX mono+ was placed in 2 mm increments. The restorations were evaluated using slightly modified USPHS criteria at baseline and then annually for 3 years. Caries risk and bruxing habits of the participants were estimated. Results: No post-operative sensitivity was reported. At the 3-year follow-up, 196 restorations - 74 Class I and 122 Class II - were evaluated. Seven restorations failed (3.6%), 4 SDR-CeramX mono+ and 3 CeramX mono+ only restorations, all of which were Class II. The main reason for failure was tooth fracture, followed by resin composite fracture. The annual failure rate (AFR) for all restorations (Class I and II) was 1.2% for the bulkfilled restorations and 1.0% for the resin composite-only restorations (p > 0.05). For the Class II restorations, the AFR was 2.2% and 1.6%, respectively. Conclusion: The 4-mm bulk-fill technique showed good clinical effectiveness during the 3-year follow-up." ;
+                                                                           dcterms:title "Randomized 3-year Clinical Evaluation of Class I and II Posterior Resin Restorations Placed with a Bulk-fill Resin Composite and a One-step Self-etching Adhesive" ;
+                                                                           rdfs:label "Randomized 3-year Clinical Evaluation of Class I and II Posterior Resin Restorations Placed with a Bulk-fill Resin Composite and a One-step Self-etching Adhesive" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ReactiveSilicateGlassParticle
 :ReactiveSilicateGlassParticle rdf:type owl:NamedIndividual ,
                                         skos:Concept .
@@ -14390,7 +14628,8 @@ Clinical significance: Overal, packable resin composites are unlikely to show su
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ResinComposite
 :ResinComposite rdf:type owl:NamedIndividual ,
-                         skos:Concept .
+                         skos:Concept ;
+                rdfs:label "Resin Composite" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ResinMaterialPropertyPaper
@@ -15173,6 +15412,41 @@ https://doi.org/10.1016/j.jdent.2021.103586.
                                skos:Concept .
 
 
+###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#WearOfBulk-FillResinComposites
+:WearOfBulk-FillResinComposites rdf:type owl:NamedIndividual ,
+                                         :Document ,
+                                         :JournalArticle ;
+                                :hasAuthor :CJKleverlaan ,
+                                           :FJRoeters ,
+                                           :MAOsiewicz ,
+                                           :WernerARoeters ;
+                                :hasSubSection :BulkResinConclusion ,
+                                               :BulkResinDiscussion ,
+                                               :BulkResinIntroduction ,
+                                               :BulkResinMaterialsAndMethods ,
+                                               :BulkResinResults ;
+                                :isAboutProduct :ConventionalNanohybridResinCompositeGrandioGDO ,
+                                                :Dual-CuringBulk_CompositeFBFL ,
+                                                :Filtek_BulkFill_FBF_3MESPE_Germany ,
+                                                :Smart_Dentin_ReplacementSDR ,
+                                                :X-traBase_XTB_Voco_Germany ;
+                                :publishedIn :DentalMaterials ;
+                                dcterms:abstract "Objective Bulk-fill resin composites are a special group of restorative materials designed to reduce chair time needed to insert a direct composite restoration. However, other factors determine the clinical success of a restorative material. Clinically the major reasons for failure of direct restorations are secondary caries and fracture of the restoration or the tooth itself. In the long-term composite resin restorations in posterior teeth may be prone to wear. As bulk-fill materials have their own composition that will determine their mechanical properties, the wear resistance may be affected as well. The aim of this in vitro study was to evaluate the wear of bulk-fill composites in comparison with a conventional hybrid composite. The null hypothesis was that there are no differences between the four bulk-fill materials and one traditional highly filled nanohybrid composite for posterior use when subjected to a two-body wear rate test and hardness measurement. Methods Four bulk-fill composites SDR Smart Dentin Replacement (SDR), X-tra base (XBA), FiltekBulk Fill (FUP), Dual-Curing Bulk Composite (FBFL) and conventional nanohybrid resin composite Grandio (GDO) subjected to a two-body wear test against a stainless steel (SS) antagonist wheel. Scanning Electron Microscopy analysis was performed to detect the surface alterations. Microhardness of all samples was tested (n = 5) with a Vickers diamond indenter (5 indentations in each specimen). One-way ANOVA and Tukey’s post hoc test (P < 0.01) were used to analyze differences in wear values. The hardness data were submitted to one-way ANOVA test, followed by the Tukey post hoc test (α = 0.05). T-test was applied to compare wear rate in time interval between one day and one month. Results The highest wear rate values were recorded for SDR and the lowest wear rate values were for GDO. Hardness was the highest for GDO and the lowest for FBFL. Significance The bulk-fill composites have a higher wear rate and lower hardness than the conventional nanohybrid composite, making them less suitable for stress-bearing restorations." ;
+                                dcterms:date "2022" ;
+                                dcterms:source "Dental Materials" ;
+                                dcterms:title "Wear of bulk-fill resin composites" ;
+                                <http://purl.org/ontology/bibo/doi> "10.1016/j.dental.2021.12.138" ;
+                                <http://purl.org/ontology/bibo/issn> "0109-5641" ;
+                                <http://purl.org/ontology/bibo/issue> "3" ;
+                                <http://purl.org/ontology/bibo/pages> "549-553" ;
+                                <http://purl.org/ontology/bibo/uri> "https://pubmed.ncbi.nlm.nih.gov/34972580/"^^xsd:anyURI ;
+                                <http://purl.org/ontology/bibo/volume> "38" ;
+                                :keywords "Wear, Dental material, Composite resin, Tooth wear, Bulk-fill" ;
+                                :product " Smart Dentin Replacement (SDR), X-tra base (XBA), FiltekBulk Fill (FUP), Dual-Curing Bulk Composite (FBFL) and conventional nanohybrid resin composite Grandio (GDO)" ;
+                                dcterms:creator "Osiewicz MA,Werner A,Roeters FJ,Kleverlaan CJ" ;
+                                rdfs:label "Wear of bulk-fill resin composites" .
+
+
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#WearResistance
 :WearResistance rdf:type owl:NamedIndividual ,
                          skos:Concept .
@@ -15752,7 +16026,8 @@ https://doi.org/10.1016/j.jdent.2021.103586.
                                       <http://purl.org/ontology/bibo/uri> "https://www.sciencedirect.com/science/article/pii/S0109564118306146;http://dx.doi.org/10.1016/j.dental.2018.11.027" ;
                                       <http://purl.org/ontology/bibo/volume> "35" ;
                                       :keywords "Bioactive, Clinical, Composite resin, Glass ionomer, Posterior, Self etch adhesive" ;
-                                      dcterms:creator "van Dijken JW,Pallesen U,Benetti A" .
+                                      dcterms:creator "van Dijken JW,Pallesen U,Benetti A" ;
+                                      rdfs:label "c500e5dc-ad85-4d2e-a1de-8317858a39ac" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#c6fd158b-660e-49a4-8134-d985f733c996
@@ -16366,41 +16641,6 @@ https://doi.org/10.1016/j.jdent.2021.103586.
                                       rdfs:label "Oral and sublingual immunotherapy for egg allergy" .
 
 
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#fe41303a-075a-4b5a-9ef7-d961284db05f
-:fe41303a-075a-4b5a-9ef7-d961284db05f rdf:type owl:NamedIndividual ,
-                                               :Document ,
-                                               :JournalArticle ;
-                                      :hasAuthor :CJKleverlaan ,
-                                                 :FJRoeters ,
-                                                 :MAOsiewicz ,
-                                                 :WernerARoeters ;
-                                      :isAboutProduct :ConventionalNanohybridResinCompositeGrandioGDO ,
-                                                      :Dual-CuringBulk_CompositeFBFL ,
-                                                      :Filtek_BulkFill_FBF_3MESPE_Germany ,
-                                                      :Smart_Dentin_ReplacementSDR ,
-                                                      :X-traBase_XTB_Voco_Germany ;
-                                      :publishedIn :DentalMaterials ;
-                                      <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/hasSubSection> <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinConclusion> ,
-                                                                                                                        <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinDiscussion> ,
-                                                                                                                        <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinIntroduction> ,
-                                                                                                                        <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinMaterialsAndMethods> ,
-                                                                                                                        <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinResults> ;
-                                      dcterms:abstract "Objective Bulk-fill resin composites are a special group of restorative materials designed to reduce chair time needed to insert a direct composite restoration. However, other factors determine the clinical success of a restorative material. Clinically the major reasons for failure of direct restorations are secondary caries and fracture of the restoration or the tooth itself. In the long-term composite resin restorations in posterior teeth may be prone to wear. As bulk-fill materials have their own composition that will determine their mechanical properties, the wear resistance may be affected as well. The aim of this in vitro study was to evaluate the wear of bulk-fill composites in comparison with a conventional hybrid composite. The null hypothesis was that there are no differences between the four bulk-fill materials and one traditional highly filled nanohybrid composite for posterior use when subjected to a two-body wear rate test and hardness measurement. Methods Four bulk-fill composites SDR Smart Dentin Replacement (SDR), X-tra base (XBA), FiltekBulk Fill (FUP), Dual-Curing Bulk Composite (FBFL) and conventional nanohybrid resin composite Grandio (GDO) subjected to a two-body wear test against a stainless steel (SS) antagonist wheel. Scanning Electron Microscopy analysis was performed to detect the surface alterations. Microhardness of all samples was tested (n = 5) with a Vickers diamond indenter (5 indentations in each specimen). One-way ANOVA and Tukey’s post hoc test (P < 0.01) were used to analyze differences in wear values. The hardness data were submitted to one-way ANOVA test, followed by the Tukey post hoc test (α = 0.05). T-test was applied to compare wear rate in time interval between one day and one month. Results The highest wear rate values were recorded for SDR and the lowest wear rate values were for GDO. Hardness was the highest for GDO and the lowest for FBFL. Significance The bulk-fill composites have a higher wear rate and lower hardness than the conventional nanohybrid composite, making them less suitable for stress-bearing restorations." ;
-                                      dcterms:date "2022" ;
-                                      dcterms:source "Dental Materials" ;
-                                      dcterms:title "Wear of bulk-fill resin composites" ;
-                                      <http://purl.org/ontology/bibo/doi> "10.1016/j.dental.2021.12.138" ;
-                                      <http://purl.org/ontology/bibo/issn> "0109-5641" ;
-                                      <http://purl.org/ontology/bibo/issue> "3" ;
-                                      <http://purl.org/ontology/bibo/pages> "549-553" ;
-                                      <http://purl.org/ontology/bibo/uri> "https://pubmed.ncbi.nlm.nih.gov/34972580/"^^xsd:anyURI ;
-                                      <http://purl.org/ontology/bibo/volume> "38" ;
-                                      :keywords "Wear, Dental material, Composite resin, Tooth wear, Bulk-fill" ;
-                                      :product " Smart Dentin Replacement (SDR), X-tra base (XBA), FiltekBulk Fill (FUP), Dual-Curing Bulk Composite (FBFL) and conventional nanohybrid resin composite Grandio (GDO)" ;
-                                      dcterms:creator "Osiewicz MA,Werner A,Roeters FJ,Kleverlaan CJ" ;
-                                      rdfs:label "Wear of bulk-fill resin composites" .
-
-
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#ff604942-23fe-4a38-b89e-a1e03dc32e43
 :ff604942-23fe-4a38-b89e-a1e03dc32e43 rdf:type owl:NamedIndividual ,
                                                :Document ,
@@ -16435,7 +16675,8 @@ https://doi.org/10.1016/j.jdent.2021.103586.
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#metal_dental_restoration_material
 :metal_dental_restoration_material rdf:type owl:NamedIndividual ,
-                                            skos:Concept .
+                                            skos:Concept ;
+                                   rdfs:label "metal_dental_restoration_material" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#0b141636-9962-4892-86cd-68f4096316ab
@@ -16705,8 +16946,8 @@ https://doi.org/10.1016/j.jdent.2021.103586.
                                                                                                          :hasAuthor :ABenetti ,
                                                                                                                     :JWvanDijken ,
                                                                                                                     :UPallesen ;
-                                                                                                         :isAboutProduct <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/ACTIVABioactive> ,
-                                                                                                                         <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/CeramX> ;
+                                                                                                         :isAboutProduct :ACTIVABioactive ,
+                                                                                                                         :CeramX ;
                                                                                                          :publishedIn :DentalMaterials ;
                                                                                                          dcterms:abstract "Objective The objective of this randomized controlled prospective clinical trial was to evaluate the short time clinical behaviour of an altered resin modified glass-ionomer cement (RMGIC), which is claimed to possess bioactivity, in posterior restorations and to compare it intraindividually with a nanofilled resin composite. Methods Totally 78 pairs Class II and 4 pairs Class I restorations were placed in 29 female and 38 male participants with a mean age of 58.3 years (range 37–86). Each patient received at random at least one pair of, as similar as possible, Class II or Class I restorations. In the first cavity of each pair, the modified flowable RMGIC (ACTIVA Bioactive; AB) was placed after phosphoric acid etching of the cavity and without adhesive, according to the instructions of the manufacturer. In the other cavity a well established nanofilled resin composite (CeramX; RC) with a single step self-etch adhesive (Xeno Select) was placed. The restorations were evaluated using slightly modified USPHS criteria at baseline, 6 and 12 months. Caries risk and parafunctional habits of the participants were estimated. Results 158 restorations, 8 Class I and 150 Class II, were evaluated at the one year recalls. At baseline two failed restorations were observed (2AB), at 6 months six failures (5AB, 1RC) and at 12 months another thirteen failed restorations were observed (12AB, 1RC). This resulted in annual failure rates of 24.1% for the AB and 2.5% for RC (p<0.0001). The main reasons for failure for AB were lost restorations (5), postoperative symptoms (4) and secondary caries (3). Do to the unacceptable very high one-year failure frequency, the clinical study was stopped and no further evaluation will be performed. Significance The use of the AB restorative in Class II cavities, applied as instructed by the manufacturer after a short phosphoric acid pretreatment but without adhesive system, resulted in a non-acceptable very high failure frequency after a one year period. Further studies should be conducted using a bonding agent" ;
                                                                                                          dcterms:date "2019" ;
@@ -16843,7 +17084,8 @@ https://doi.org/10.1016/j.jdent.2021.103586.
                                                                                                          <http://purl.org/ontology/bibo/uri> "https://www.sciencedirect.com/science/article/pii/S0109564121003122;http://dx.doi.org/10.1016/j.dental.2021.10.018" ;
                                                                                                          <http://purl.org/ontology/bibo/volume> "38" ;
                                                                                                          :keywords "Clinical efficacy, Composite resins, Bulk fill, Compomers, Glass ionomers, Longevity, Meta-analysis, Bias" ;
-                                                                                                         dcterms:creator "Heintze SD,Loguercio AD,Hanzen TA,Reis A,Rousson V" .
+                                                                                                         dcterms:creator "Heintze SD,Loguercio AD,Hanzen TA,Reis A,Rousson V" ;
+                                                                                                         rdfs:label "196a7065-4355-42b9-a4bc-9ac4269d7b9e" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#2b77f03a-bfb0-453d-a7ab-3cf29c9b1766
@@ -17091,7 +17333,8 @@ https://doi.org/10.1016/j.jdent.2021.103586.
                                                                                                          <http://purl.org/ontology/bibo/uri> "https://www.sciencedirect.com/science/article/pii/S0109564118312004;http://dx.doi.org/10.1016/j.dental.2019.01.005" ;
                                                                                                          <http://purl.org/ontology/bibo/volume> "35" ;
                                                                                                          :keywords "Artificial saliva, Dental materials, Ethanol, , Liquid chromatography, Mass spectrometry, Monomers" ;
-                                                                                                         dcterms:creator "Putzeys E,Nys S,Cokic SM,Duca RC,Vanoirbeek J,Godderis L,Van Meerbeek B,Van Landuyt KL" .
+                                                                                                         dcterms:creator "Putzeys E,Nys S,Cokic SM,Duca RC,Vanoirbeek J,Godderis L,Van Meerbeek B,Van Landuyt KL" ;
+                                                                                                         rdfs:label "27943d2b-9c92-4969-a3a4-95d26af66f4c" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#287a9a6d-959c-4b10-ad27-9d491333a2d1
@@ -17386,7 +17629,8 @@ https://doi.org/10.1016/j.jdent.2021.103586.
                                                                                                          <http://purl.org/ontology/bibo/uri> "https://www.sciencedirect.com/science/article/pii/S0109564120301287;http://dx.doi.org/10.1016/j.dental.2020.04.019" ;
                                                                                                          <http://purl.org/ontology/bibo/volume> "36" ;
                                                                                                          :keywords "Bulk fill, Resin composite, Irradiation regimes, Exposure duration, Reciprocity, Vickers hardness, Hardness depth profile" ;
-                                                                                                         dcterms:creator "Sadeghyar A,Watts DC,Schedle A" .
+                                                                                                         dcterms:creator "Sadeghyar A,Watts DC,Schedle A" ;
+                                                                                                         rdfs:label "4594c741-3c3e-4003-8c9e-69a28e5bcf20" .
 
 
 ###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#48a89940-f3f7-475d-9fd3-268f88cc18a5
@@ -18274,211 +18518,6 @@ https://doi.org/10.1016/j.jdent.2021.103586.
                                                                                    :firstName "T" ;
                                                                                    :lastName "Pereira‐Cenci" ;
                                                                                    rdfs:label "T Pereira‐Cenci" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/ACTIVABioactive
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/ACTIVABioactive> rdf:type owl:NamedIndividual ,
-                                                                                             :DentalMaterialProduct ;
-                                                                                    rdfs:label "ACTIVA Bioactive" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Bulk-filled_posterior_resin_restorations
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Bulk-filled_posterior_resin_restorations> rdf:type owl:NamedIndividual ,
-                                                                                                                      :JournalArticle ;
-                                                                                                             :hasAuthor :JWvanDijken ;
-                                                                                                             :publishedIn <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/EuropeanJournalOfOralSources> ;
-                                                                                                             dcterms:abstract "This randomized study evaluated a flowable resin composite bulk-fill technique in posterior restorations and compared it intraindividually with a conventional 2-mm resin composite layering technique over a 6-yr follow-up period. Thirty-eight pairs of Class II restorations and 15 pairs of Class I restorations were placed in 38 adults. In all cavities a single-step self-etch adhesive (Xeno V) was applied. In the first cavity of each pair, the flowable resin composite (SDR) was placed, in bulk increments of up to 4 mm. The occlusal part was completed with a layer of nanohybrid resin composite (Ceram X mono). In the second cavity of each pair, the hybrid resin composite was placed in 2-mm increments. The restorations were evaluated using slightly modified US Public Health Service (USPHS) criteria at baseline and then annually for a time period of 6 yr. After 6 yr, 72 Class II restorations and 26 Class I restorations could be evaluated. Six failed Class II molar restorations, three in each group, were observed, resulting in a success rate of 93.9% for all restorations and an annual failure rate (AFR) of 1.0% for both groups. The AFR for Class II and Class I restorations in both groups was 1.4% and 0%, respectively. The main reason for failure was resin composite fracture." ;
-                                                                                                             dcterms:title "Bulk-filled posterior resin restorations based on stress-decreasing resin technology: a randomized, controlled 6-year evaluation" ;
-                                                                                                             rdfs:label "Bulk-filled posterior resin restorations based on stress-decreasing resin technology: a randomized, controlled 6-year evaluation" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinConclusion
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinConclusion> rdf:type owl:NamedIndividual ,
-                                                                                                 <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Section> ;
-                                                                                        <http://purl.org/ontology/bibo/section> "5" ;
-                                                                                        <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/content> "Within the limited scope of the current in vitro study, it can be concluded that the wear of bulk-fill composites is significantly higher than the wear of a conventional nanohybrid composite resin. Furthermore, the study shows that, if the bulk-fill composite is covered with a thin layer of conventional resin composites, the wear of the latter is not influenced by underlying layer of the bulk-fill composite. The bulk-fill materials can be expected to perform satisfactorily in small restorations, but not in stress bearing areas and in heavy wear situations." .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinDiscussion
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinDiscussion> rdf:type owl:NamedIndividual ,
-                                                                                                 <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Section> ;
-                                                                                        <http://purl.org/ontology/bibo/section> "4" ;
-                                                                                        <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/content> """The aim of this study was to elucidate the wear mechanism of bulk-fill / conventional hybrid composite layered system. It was expected that the bulk-fill composite beneath the layer of the conventional hybrid composite would lead to lower wear resistance in comparison to the conventional hybrid composite. This hypothesis was rejected because there was no convincing evidence that underlying bulk-fill materials influenced the wear rate of the conventional hybrid composite layer. Apparently, the underlying bulk-fill materials are stiff enough to allow an even distribution of the surface stress and act as a monoblock of GDO.
-
-The wear rate of the bulk-fill composites themselves was higher than in most of the restoratives. The three-body wear in general is about 20 µm / 200,000 cycles for ceramics, enamel, and posterior resin composites and 30–60 µm / 200,000 cycles for most of the other conventional hybrid composites [11], [12]. The wear rate of glass-ionomer cement and resin composite materials for temporary restorations like Protemp 4 is approximately 100 µm / 200,000 cycles. Due to their high wear rate, such materials must be considered as materials suitable for temporary restorations [13]. The SDR bulk-fill resin composite showed a wear rate similar to that of temporary filling materials as their level of wear is approximately 120 µm / 200,000 cycles. The wear rate of the other bulk-fill resin composites was lower, but not good enough to be applied in stress-bearing areas, such as in large posterior restorations and in the case of patients with parafunctional habits, such as bruxism. Table 3.
-
-Table 3. Mean Vickers hardness (VH) and the standard deviation in parenthesis.
-
-Material	Vickers hardness
-GDO
-SDR
-XBA
-FUP
-FBFL	124 (6)a
-45 (2)d
-70 (3)b
-62 (2)c
-40 (1)e
-Different lowercase letters indicate significant differences (P < 0.05) between the materials.
-
-
-In general, differences in wear between the composite resins used, are largely related to the volume of filler particles and their distribution, matrix properties, the degree of conversion, and the bond between the matrix and the filler. Previously, we showed a strong correlation for the wt% of filler and wear rates of different types of restorative composites [14]. In this study we found strong correlations for the wt% and the hardness, but the highest correlation was found for the vol% of the filler content. The vol% of filler content is also related to the E-modulus, e.g. a high E-modulus results in low stress during loading and less deformation and subsequently a lower wear rate.
-
-The low modulus of elasticity of bulk-fill resin composites has the advantage of being able to reduce the polymerization shrinkage stress within the composite, but at the same time will lead to more deformation and fatigue wear both to the restoration and the remaining tooth structure when the restoration is loaded. The deformation of the remaining tooth structure is directly related to the size of restoration, e.g. the larger restorations will result in more deformation. Furthermore, bulk-fill composites will have a higher water uptake as the resin content is higher compared to conventional composites. This makes bulk-fill composites more prone to deterioration.
-
-Restorations are not only subjected to occlusal wear but most multisurface posterior restorations will also demonstrate proximal wear. To reduce occlusal wear of a flowable bulk-fill composite, an occlusal layer of a conventional type of restorative composite is applied. However, interproximal the flowable will come at the surface and in approximal contact. Approximal wear of teeth and restorative materials will occur as a result of the mesial drift [15]. A rapidly wearing approximal contact will change the position of the tooth and the shape of the approximal contour. This is a clinical problem, which is difficult to predict or simulate, but the high wear rate of bulk-fill composites is not in favor of this phenomenon.
-
-LePrince and others showed that the physical properties of bulk-fill composites are lower than in the case of a conventional nanohybrid composite resin. The present study demonstrates that the wear of bulk-fill materials is relatively high [5]. However, small restorations can be done in one-step if the applied forces are low and a semi-permanent restoration is required. Based on these results they are suitable for restoring primary teeth.
-
-In the case of restoring permanent teeth, a longer survival of the restorations is beneficial. If the modest gain in time (especially if a bulk-fill material has to be covered with a layer of conventional composite) is more important than a higher quality of the restoration, but it is something that needs to be discussed with the patient.""" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinIntroduction
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinIntroduction> rdf:type owl:NamedIndividual ,
-                                                                                                   <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Section> ;
-                                                                                          <http://purl.org/ontology/bibo/section> "1" ;
-                                                                                          <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/content> """Bulk-fill resin composites have gained popularity in the recent years thanks to their improved depth of cure. This is the result of incorporating larger filler particles, reducing the amount of pigments, and changing the monomer systems of the composites. These bulk-fill resin composites can be applied and cured in thicker layers than conventional resin composites [1]. Nevertheless, polymerization shrinkage stress, induced by the activation of the methacrylate-based monomers, may cause post-operative sensitivity and marginal leakage, increasing the risk for secondary caries [2].
-
-Bulk-fill resin composites were introduced by being applied in one layer up to three times the thickness of the conventional resin composites [3], [4]. At present there are two types of bulk-fill resin composites: (1) flowable composite, which requires an additional layer of a conventional resin composite for the occlusal surface; and (2) composites with a normal consistency suitable to complete the whole restoration. There is a growing group of practitioners who choose bulk-fill resin composites for the reduction of working time. For them the esthetic qualities of the material is less important as bulk-fill materials are highly translucent to facilitate transmission of light to enable polymerization of the deepest parts of the restoration. The high translucency results in a greyish shade of the restoration that may hamper the esthetics. Furthermore, the flowering of the filler content of the bulk-fill resin composite required to facilitate light transmission, will affect the mechanical properties and durability of the material, as a higher filler content is accompanied by mechanical properties [5], [6]. The latest generations of bulk-fill resin composites have increased the filler content and claim to have improved mechanical properties, which would make these materials even more suitable for large posterior restorations than the traditional resin composites [7]. Recent studies evaluating the mechanical resistance against abrasion or fracture toughness of bulk-fill resin composites, did not show any improvement in comparison with conventional resin composites [8]. The clinical longevity of a composite restoration also depends on its resistance against wear and fracture.
-
-To provide more insight into the wear of bulk-fill materials this investigation focusses on the mechanism of surface wear of bulk-fill materials in a single layer and with a top layer. Surface wear and fatigue are the result of moving and sliding contacts during cyclic loading. The localized stresses that are generated by direct contacts between occlusal surfaces are located slightly below the surface [9], [10]. These subsurface stresses are considered an important factor in surface fatigue, which initiates the subsurface cracks, eventually leading to extensive surface damage and resulting in high wear rates. As the deformation and the stresses depend on the rigidity or flexibility of the supporting material in the layered system, one might expect a higher wear rate if the supporting material is more flexible, and a lower wear rate if the supporting material is relatively stiff and reduces deformation of the top layer. Therefore, three different configurations were evaluated: (1) bulk-fill material (low E-modulus) with 0.5 mm a traditional hybrid composite (high E-modulus), (2) bulk-fill material (low E-modulus) with a 1.0 mm traditional hybrid composite (high E-modulus) and wear rate of bulk-fill materials and traditional hybrid composite itself (Fig. 1).
-
-Fig. 1
-Download : Download high-res image (39KB)
-Download : Download full-size image
-Fig. 1. Schematic representation of the experimental set-up for three different configurations, where (1) is a bulk-fill composite covered with 0.5 mm conventional composite (2) a bulk-fill composite covered with 0.5 mm conventional composite and (3) the pure bulk-fill composite.
-
-The aim of the in vitro study was to provide information about the wear mechanism of bulk-fill / traditional hybrid composite layer systems and the intrinsic wear rate of the bulk-fill resin and traditional hybrid composites. The null hypothesis of this study was that there are significant differences between the wear rate of the conventional hybrid composite layer applied on the bulk-fill composites.""" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinMaterialsAndMethods
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinMaterialsAndMethods> rdf:type owl:NamedIndividual ,
-                                                                                                          <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Section> ;
-                                                                                                 <http://purl.org/ontology/bibo/section> "2" ;
-                                                                                                 <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/content> """The materials used in the study, their manufacturers, and batch numbers are shown in Table 1. All restoration materials were handled and cured according to the manufacturers’ instructions. The three-body wear was evaluated with a wear machine developed by the Academic Centre for Dentistry Amsterdam (ACTA) in accordance with ISO/TS 14569. In short, the ACTA wear machine was equipped with two wheels of different diameters: a specimen wheel with a diameter of 48 mm and a stainless steel antagonist wheel with a diameter of 19 mm. Both wheels rotated in the same direction at a different circumferential speed of 15%, inside a bowl, which contained a third body medium, consisting of a slurry of rice and millet seed shells (pH = 7). One wheel accommodated ten specimens and the antagonist wheel was pressed against the specimen wheel at a spring force of 15 N. Three experimental configurations were evaluated: (1) the bulk fill materials covered with 0.5 mm of the conventional composite (GDO), (2) the bulk fill materials covered with 1.0 mm of conventional composite (GDO), (3) the bulk fill materials with no coverage (see Fig. 1). The following procedure was performed for the two-layer specimen wheels: the metal part of the specimen wheel measuring 48 mm in diameter and two support wheels, with a diameter of 47 mm or 46 mm, respectively, were attached to the sides of the specimen wheel (Fig. 2). The compartment was filled with the composite and cured. Thereafter a 48 mm support wheel was attached to the sides of the specimen wheel and the covering layer of GDO was applied and cured.
-
-Table 1. Materials properties of materials used according to literature and manufacturers data.
-
-Code	Materials	Manufacturer	Fillers	Type	Cover	Batch
-GDO	Grandio	Vocoa	87% wt / 71 vol% Silica, Zirconia 0.075–0.6 µm	Nano-hybrid composite	–	1812451
-2021–09
-SDR	SDR Smart Dentin Replacement	Dentsplyb	68 wt% / 44 vol% Barium and strontium aluminofluoro silicate glass	Bulk-fill flowable composite	2 mm	1606024
-2018–06
-XBA	X-tra base	Vocoa	75 wt% / 58 vol%	Bulk-fill flowable composite	2 mm	1634112
-2018–11
-FUP	Fill-Up! Dual Curing Bulk Composite	Coltene-Whaledentc	65 wt% / 49 vol% Barium aluminofluoride borosilicate glass 0.1–5 µm	Bulk-fill flowable composite	2 mm	G85036
-2018–02
-FBFL	Filtek Bulk Fill	3 M-Esped	77 wt% / 58 vol% Zirconia, Silica 0.01–3.5 µm	Bulk-fill flowable composite	2 mm	N817704
-2019–10
-a Cuxhaven, Germany; b Konstanz, Germany; c Altstätten, Switzerland; d St. Paul, MN, USA.
-
-
-Fig. 2
-Download : Download high-res image (203KB)
-Download : Download full-size image
-Fig. 2. Graphical representation of the construction to develop wheels with specimens consisting of two different layers on top: 0.5 mm and 1.0 mm.
-
-The wear experiments were conducted after three days and one month, and the specimen wheel was stored in water at RT during the whole experiment. An experimental run consisted of 200,000 cycles (55½ h) of the specimen wheel rotating at the speed of 1 Hz. After each run, 10 tracings (n = 10) were taken at fixed positions on the worn-down surface of the specimens (PRK profilometer No. 20702, Perthen GmbH, Hannover, Germany) to determine the loss of the material in µm. The average wear rate (ten tracings on two specimens; n = 20) and their standard deviations were calculated from these profiles.
-
-The Vickers Hardness of the surface of the composites was evaluated with a micro hardness test. Five indentations were made in each specimen with a Vickers diamond indenter under 20 N load and a dwell time of 20 s. Hardness values (GPa) were calculated according to the equation H = P / 2d2, where P is the load in Newtons and is the average of the diagonal values.
-
-Two-way ANOVA was used to test for significant differences in wear rate and materials and the experimental configuration. One-way ANOVA and Tukey’s post hoc test (P < 0.05) were applied to test for significant differences in wear rate within materials, experimental configuration, and for the Vicker Hardness test. Independent t-tests were used to compare the wear rate at different time intervals. The linear correlation coefficients between wt%, vol% and Vickers hardness and wear rate were also calculated. The software used was SPSS * * (SPSS, Chicago, IL, USA).""" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinResults
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/BulkResinResults> rdf:type owl:NamedIndividual ,
-                                                                                              <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Section> ;
-                                                                                     <http://purl.org/ontology/bibo/section> "3" ;
-                                                                                     <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/content> """The wear rates are summarized in Table 2. Two-way ANOVA statistical test showed that the type of material (F3 days = 1428.9; F1 month = 1145.5; P < 0.001), configuration (F3 days = 9139.5; F1 month = 9137.9; P < 0.001) and their interaction (F3 days = 1372.5; F1 month = 1135.5; P < 0.001) had a signiﬁcant effect on the wear rate after three days and 30 days. Independent t-test showed that all the wear rates recorded after three days were significantly higher than the one taken after one month (P < 0.05).
-
-Table 2. The wear rate (in μm / 200.000 rev) and the standard deviation in parenthesis after three days and one month for four bulk-fill composites and one nano-hybrid composite at two different times depending on the configuration of the experiment.
-
-Material (three days)	0.5 mm GDO	1.0 mm GDO	No Cover
-GDO
-SDR
-XBA
-FUP
-FBFL	32.0 (0.8)Aa
-32.6 (1.3)Aa
-31.7 (1.6)Aa
-32.0 (1.5)Aa
-32.0 (1.4)Aa	29.3 (1.0)Ba
-30.5 (1.4)Ab
-31.6 (1.1)Ab
-32.8 (1.1)Ac
-31.3 (1.5)Ab	31.4 (0.6)Aa
-118.4 (6.0)Bd
-60.5 (2.0)Bb
-59.3 (2.7)Bb
-69.7 (2.7)Bc
-Material (one month)	0.5 mm GDO	1.0 mm GDO	No Cover
-GDO
-SDR
-XBA
-FUP
-FBFL	22.1 (0.8)Abc
-22.3 (1.4)Bc
-21.2 (2.0)Abc
-21.1 (0.8)Ab
-21.6 (0.5)Bbc	20.0 (0.8)Bde
-20.3 (0.8)Ade
-22.4 (6.0)Ae
-20.5 (1.1)Ade
-19.5 (0.7)Ad	22.3 (0.9)Ae
-96.3 (3.2)Ch
-49.0 (1.2)Bf
-48.5 (1.7)Bf
-59.3 (1.4)Cg
-Different lowercase letters indicate significant differences (P < 0.05) between the materials.
-
-Different uppercase letters indicate significant differences (P < 0.05) between the configuration of the experiment.
-
-
-The average wear rate after three days was between 29.3 and 32.8 µm / 200.000 rev for the configurations (1) and (2), where the bulk-fill material was covered with conventional hybrid composite GDO. In most cases it was not significantly (P < 0.05) different from the wear rate of the hybrid composite GDO itself. If there was a significant difference, it was within 2 µm of the wear rate of GDO and clinically not relevant. The average wear rate of the bulk-fill materials after three days was between 59.3 and 118.4 µm / 200.000 rev for the uncovered bulk-fill composites configuration (3). All these wear rates were significantly higher than GDO (31.4 µm / 200.000 rev). The wear rate after three days was the highest for SDR and the lowest for FUP.
-
-The correlation coefficients between the wear rate (at day three) and the filler content in wt% and vol%, and the Vickers hardness were also calculated. The correlation coefficient for wt% and Vickers hardness was strong, with r = 0.645 and 0.758, respectively. For the filler content on vol% the correlation coefficients was very strong with r = 0.844.""" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/CeramX
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/CeramX> rdf:type owl:NamedIndividual ,
-                                                                                    :DentalMaterialProduct ;
-                                                                           rdfs:label "CeramX" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/DecisionMakingForCompromisedTeeth
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/DecisionMakingForCompromisedTeeth> rdf:type owl:NamedIndividual ,
-                                                                                                               :JournalArticle ;
-                                                                                                      :hasAuthor :ACFernandes ;
-                                                                                                      dcterms:abstract "The objective of this study was to evaluate factors that may influence decision-making with regard to extraction or maintenance of periodontally compromised teeth. A questionnaire with 2 distinct clinical scenarios, each including a radiographic image, was provided to students in their final year of dental school and practicing dentists. The participants were asked to record the action that they would take in each case (tooth maintenance vs extraction) and provide a justification for their decision. The questionnaires were answered by 158 dental students and 57 dentists (N = 215). Among the sample as a whole, 31.16% of participants recommended extraction in scenario 1, while only 5.58% recommended that action in scenario 2. In scenario 1, there was a statistically significant difference in the recommendations of the dental students and the dentists, with the former group significantly more disposed to conservative action, that is, maintenance of the tooth (P < 0.001; chi-square test). When the actions recommended by participants specializing in implants or periodontics (or both) were compared with those recommended by other specialists, there was a statistically significant difference between the groups regarding maintenance and extraction (P = 0.012; Fisher exact test), with the former group recommending fewer extractions. When the responses were evaluated in terms of the participants' years of specialty practice, it was observed that professionals with fewer than 20 years of practice were more conservative in their decisions, choosing tooth maintenance significantly more often than specialists with longer experience (P = 0.031; Fisher exact test). Among the majority of both dental students and practicing dentists, the decision in both scenarios was to maintain the compromised teeth; however, the results suggested that that both the years of experience of the individual and the specialty of the practitioner can influence decision-making." ;
-                                                                                                      dcterms:title "Role of professional expertise in the decision-making process for periodontally compromised teeth" ;
-                                                                                                      <http://purl.org/ontology/bibo/uri> "https://pubmed.ncbi.nlm.nih.gov/35225808/"^^xsd:anyURI ;
-                                                                                                      :keywords "decision-making; dental implants; periodontal diseases; teaching methods." ;
-                                                                                                      rdfs:label "Role of professional expertise in the decision-making process for periodontally compromised teeth" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/EuropeanJournalOfOralSources
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/EuropeanJournalOfOralSources> rdf:type owl:NamedIndividual ,
-                                                                                                          :Journal ;
-                                                                                                 rdfs:label "European Journal Of Oral Sources" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Phosphoric_acid_bond_stability_of_resindentin_interface
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Phosphoric_acid_bond_stability_of_resindentin_interface> rdf:type owl:NamedIndividual ,
-                                                                                                                                     :JournalArticle ;
-                                                                                                                            :hasAuthor :ACFernandes ;
-                                                                                                                            dcterms:abstract "Proanthocyanidin (PA) is a promising dentin biomodifier due to its ability to stabilize collagen fibrils against degradation by matrix metalloproteinases (MMPs); however, the most effective protocol to incorporate PA into bonding procedures is still unclear. This study evaluated the effect of dentin biomodification with a PA acid etchant on MMP activity, adhesive interface morphology and resin-dentin microtensile bond strength. Sound extracted human molars were flattened to expose dentin and acid-etched for 15 s according to the groups: EXP - experimental phosphoric acid; EXP+PA - experimental phosphoric acid 10% PA; TE - total-etching system; SE - self-etching system. Samples were restored with composite resin and stored in distilled water (37ºC). MMP activity and interface morphology were analyzed after 24 h by in situ zymography (n=6) and scanning electron microscopy (n=3), respectively. The resin-dentin microtensile bond strength (μTBS) was evaluated after 24 h and 6 months storage (n=6). Significantly higher MMP activity was detected in etched dentin compared with untreated dentin (p<0.05), but no difference among acid groups was found. Resin tags and microtags, indicative of proper adhesive system penetration in dentinal tubules and microtubules, were observed along the hybrid layer in all groups. There was no difference in μTBS between 24 h and 6 months for EXP+PA; moreover, it showed higher long-term μTBS compared with TE and EXP (p<0.05). The results suggest that 15 s of biomodification was not sufficient to significantly reduce MMP activity; nonetheless, EXP+PA was still able to improve resin-dentin bond stability compared with total- and self-etching commercial systems." ;
-                                                                                                                            dcterms:title "Phosphoric acid containing proanthocyanidin enhances bond stability of resin/dentin interface" ;
-                                                                                                                            <http://purl.org/ontology/bibo/uri> "https://www.ncbi.nlm.nih.gov/pmc/articles/PMC9645179/"^^xsd:anyURI ;
-                                                                                                                            rdfs:label "Phosphoric acid containing proanthocyanidin enhances bond stability of resin/dentin interface" .
-
-
-###  http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Randomized3-yearClinicalEvaluationofClassIandIIPosteriorResinRestorations
-<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Randomized3-yearClinicalEvaluationofClassIandIIPosteriorResinRestorations> rdf:type owl:NamedIndividual ,
-                                                                                                                                                       :JournalArticle ;
-                                                                                                                                              :hasAuthor :JWvanDijken ;
-                                                                                                                                              dcterms:abstract "Purpose: To evaluate the 3-year clinical durability of the flowable bulk-fill resin composite SDR in Class I and Class II restorations. Materials and methods: Thirty-eight pairs of Class I and 62 pairs of Class II restorations were placed in 44 male and 42 female patients (mean age 52.4 years). Each patient received at least two extended Class I or Class II restorations that were as similar as possible. In all cavities, a one-step self-etching adhesive (XenoV+) was applied. One of the cavities of each pair was randomly assigned to receive the flowable bulk-fill resin composite SDR in increments up to 4 mm as needed to fill the cavity 2 mm short of the occlusal cavosurface. The occlusal part was completed with an ormocer-based nanohybrid resin composite (Ceram X mono+). In the other cavity, only the resin composite CeramX mono+ was placed in 2 mm increments. The restorations were evaluated using slightly modified USPHS criteria at baseline and then annually for 3 years. Caries risk and bruxing habits of the participants were estimated. Results: No post-operative sensitivity was reported. At the 3-year follow-up, 196 restorations - 74 Class I and 122 Class II - were evaluated. Seven restorations failed (3.6%), 4 SDR-CeramX mono+ and 3 CeramX mono+ only restorations, all of which were Class II. The main reason for failure was tooth fracture, followed by resin composite fracture. The annual failure rate (AFR) for all restorations (Class I and II) was 1.2% for the bulkfilled restorations and 1.0% for the resin composite-only restorations (p > 0.05). For the Class II restorations, the AFR was 2.2% and 1.6%, respectively. Conclusion: The 4-mm bulk-fill technique showed good clinical effectiveness during the 3-year follow-up." ;
-                                                                                                                                              dcterms:title "Randomized 3-year Clinical Evaluation of Class I and II Posterior Resin Restorations Placed with a Bulk-fill Resin Composite and a One-step Self-etching Adhesive" ;
-                                                                                                                                              rdfs:label "Randomized 3-year Clinical Evaluation of Class I and II Posterior Resin Restorations Placed with a Bulk-fill Resin Composite and a One-step Self-etching Adhesive" .
 
 
 ###  http://www.w3.org/2004/02/skos/core#Concept
@@ -20261,6 +20300,9 @@ dcterms:creator rdfs:label "creator" .
                      rdfs:label "Data Property Concept" .
 
 
+:Database rdfs:label "Database" .
+
+
 :DeciduousTeethCrownRestorationProcedure rdfs:label "Deciduous Teeth Crown Restoration Procedure" .
 
 
@@ -20363,6 +20405,9 @@ Changed the IRI to make it easier to use in Python, SPARQL, and other code.""" ;
 
 
 :Hardness rdfs:label "Hardness" .
+
+
+:High rdfs:label "High" .
 
 
 :HighCopperAdmixed rdfs:label "High Copper Admixed" .
@@ -20507,6 +20552,9 @@ Renamed IRI to make it more intuitive for Python, SPARQL, etc.""" ;
 
 
 :MicromechanicalBonding rdfs:label "Micromechanical Bonding" .
+
+
+:Minimum rdfs:label "Minimum" .
 
 
 :ModerateAestheticDDRM rdfs:label "Moderate Aesthetic DDRM" .
@@ -20793,11 +20841,11 @@ skos:Concept rdfs:comment "This is the class that all punned classes are instanc
 #################################################################
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/High>
-                <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Low>
-                <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Maximum>
-                <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Minimum>
-                <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/Moderate>
+  owl:members ( :High
+                :Low
+                :Maximum
+                :Minimum
+                :Moderate
               )
 ] .
 
