@@ -10,10 +10,10 @@ owl_object_property = conn.createURI("http://www.w3.org/2002/07/owl#ObjectProper
 owl_class = conn.createURI("http://www.w3.org/2002/07/owl#Class")
 rdfs_label_property = conn.createURI("http://www.w3.org/2000/01/rdf-schema#label")
 skos_pref_label_property = conn.createURI("http://www.w3.org/2004/02/skos/core#prefLabel")
-ontology_string = "http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/"
+ontology_string = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#"
 
 # Given the last part of an IRI will return the full IRI string
-# E.g., given "Person" returns "http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/Person"
+# E.g., given "Person" returns "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Person"
 def make_iri_string (iri_name):
     return ontology_string + iri_name
 
@@ -66,7 +66,7 @@ def find_instance_from_iri(iri_name):
         for statement in statements:
             if len(statements) > 1:
                 print(f'Warning two or more Individuals with ID: {instance_iri} using first one')
-                return statement.subject()
+                return statement.getSubject()
             elif len(statements) == 1:
                 return statement.getSubject()
     return None
@@ -145,8 +145,9 @@ def object_to_string(kg_object):
 # this should strip out the datatype and extra string characters so will return mdebelissf@gmail.com
 def convert_to_string (literal):
         literal = str(literal)
-        literal = literal.replace(literal[literal.find("^") + len("^"):], '') #remove the datatype
-        literal = literal[1:len(literal) - 2] # remove the string characters and the remaining ^
+        if "^" in literal:
+            literal = literal.replace(literal[literal.find("^") + len("^"):], '') #remove the datatype
+            literal = literal[1:len(literal) - 2] # remove the string characters and the remaining ^
         return literal
 
 # Adds a new value to an instance of a property.
@@ -161,34 +162,36 @@ def put_value(instance, kg_property, new_value):
 def delete_value(instance, kg_property, old_value):
     conn.removeTriples(instance, kg_property, old_value)
 
-
+"""
 #Test data, in each case the comment below is what should be returned (with the current ontology)
 # Note: these were made for another ontology originally so these examples won't work. 
 # I'm going to update them when I get a chance for drmo
-print(find_instance_from_iri("SanFrancisco"))
-# <http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/SanFrancisco>
-print(get_values("USA", "contains"))
-# [<http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/SanFrancisco>, <http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/CA>,... ]
-print(get_value("MichaelDeBellis", "email"))
-# "mdebellissf@gmail.com"^^<http://www.w3.org/2001/XMLSchema#anyURI>
-print(convert_to_string(get_value("MichaelDeBellis", "email")))
+print(find_instance_from_iri("AMerry"))
+# <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#AMerry>
+print(get_values("AMerry", "isAuthorOf"))
+# [<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#TestDocumentAM>,...]
+print(get_value("AMerry", "lastName"))
+# "Merry"
+print(convert_to_string(get_value("AMerry", "lastName")))
 # mdebellissf@gmail.com
-print(find_class("Agent"))
-# <http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/Agent>
+print(find_class("DentalMaterialProduct"))
+# <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#DentalMaterialProduct>
 print(find_class("Foo"))
 # Error Foo is not a class
 # None
-print(find_instances_of_class("Person"))
+print(find_instances_of_class("JournalArticle"))
 # [<http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/DanielDuffy>, <http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/RyanMcGranaghan>,...]
-print(object_to_string(find_class("Organization")))
-# "Organization"
-put_value(find_instance_from_iri("USA"), find_property("contains"), make_instance("Alaska", "State"))
-conn.deleteDuplicates("spo")   # So we can run the test data without creating lots of Alaskas
-print(get_values("USA", "contains"))
-# List should include Alaska
-delete_value(find_instance_from_iri("USA"), find_property("contains"),find_instance_from_iri("Alaska"))
-print(get_values("USA", "contains"))
-# List should not include Alaska
-print(find_object_from_label("Adam Kellerman"))
-# <http://www.semanticweb.org/ontologies/2022/1/CfHA_Ontology/AdamKellerman>
-
+print(object_to_string(find_class("JournalArticle")))
+# "Journal Article"@en
+put_value(find_instance_from_iri("AMerry"), find_property("isAuthorOf"), make_instance("TestDocumentAM", "JournalArticle"))
+print(get_values("AMerry", "isAuthorOf"))
+# [<http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#TestDocumentAM>,...]
+# List should include TestDocumentAM
+delete_value(find_instance_from_iri("AMerry"), find_property("isAuthorOf"),find_instance_from_iri("TestDocumentAM"))
+print(get_values("AMerry", "isAuthorOf"))
+# List should not include TestDocumentAM
+print(find_object_from_label("A Marie"))
+# <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#AMarie>
+# Note: always use find_object_from_iri when possible, it should be much faster
+conn.deleteDuplicates("spo")   # So we can run the test data without creating duplicates
+"""
