@@ -86,7 +86,7 @@ def find_object_from_label(label_string):
 # Gets the value of a single valued property using the IRI name of the instance and the IRI name of the property
 # If the property has multiple values prints a warning and returns the first one
 # If the property has no value returns None Note: if not sure whether property has multiple values, best to use get_values
-def get_value (iri_name,property_string):
+def get_value(iri_name, property_string):
     instance = find_instance_from_iri(iri_name)
     if instance is None:
         print("Error no object with iri name: {iri_name}")
