@@ -52,7 +52,7 @@ sparqlQuery = st.text_area("Answer:", value=do_query(question), height=None, max
 
 st.page_link("http://localhost:10035/gruff/43245/", label="View answer graph in Gruff", icon=None, help=None, disabled=False, use_container_width=None)
 
-g#st.write("This is what the first text box entered " + str(dentistInput))
+#st.write("This is what the first text box entered " + str(dentistInput))
 #st.write("This is what the second box wrote " + str(sparqlQuery))
 
 # streamlit run C:\Users\mdebe\Documents\GitHub\DrMO_Docs\drmo_basic_ui.py
