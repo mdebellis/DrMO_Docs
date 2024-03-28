@@ -4,8 +4,13 @@ from spacy.matcher import Matcher
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 
-# Create a blank English nlp object
-nlp = spacy.blank("en")
+def test_authors():
+    print("test")
+    nlp = spacy.blank("en")
+    doc = nlp("Steve Jobs is looking at buying U.K. startup for $1 billion")
+    print(doc.ents)
+    for ent in doc.ents:
+        print(ent.text, ent.label_)
 
 # Test data for the functions that process author strings
 author_string_1 = "Sadeghyar, A; Watts, DC; Schedle, A; DeBellis, M"
@@ -13,7 +18,7 @@ author_string_2 = "Simila, HO; DeBellis, M"
 author_string_3 = "Makrgeorgou, A"
 
 # Create a basic matcher object
-matcher = Matcher(nlp.vocab)
+#matcher = Matcher(nlp.vocab)
 
 # Pattern to match strings such as: "Sadeghyar, A; Watts, DC; Schedle, A; DeBellis, M"
 author_pattern_sc = [
@@ -80,8 +85,8 @@ product_pattern = [
     {"LOWER": "filtek p60 (3m espe dental products)"},]
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
-conn = ag_connect('drmo', host='localhost', port='10035',
-                  user='mdebellis', password='df1559')
+conn = ag_connect(repo='drmo', host='localhost', port='10035',
+                  user='user', password='xxxx')
 
 # Set up variables bound to various classes and properties needed for this file
 creator_property = conn.createURI("http://purl.org/dc/terms/creator")
@@ -113,7 +118,7 @@ def add_authors():
 
 # This is really a hack right now. I change the binding for this and rerun the function, first to match the pattern
 # with semicolons then to match the pattern with commas
-matcher.add("Author_PATTERN_", [author_pattern_c])
+#matcher.add("Author_PATTERN_", [author_pattern_c])
 
 # Takes string for first and last name (first name can be initials) and returns an author object if one exists
 # If one doesn't exist it is created and the appropriate properties are set
@@ -170,4 +175,5 @@ def process_authors_nosc(document, author_string):
 
 #process_authors(None, author_string_3)
 
-add_authors()
+#add_authors()
+test_authors()
