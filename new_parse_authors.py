@@ -4,7 +4,7 @@ import uuid
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
 conn = ag_connect(repo='drmo', host='localhost', port='10035',
-                  user='mdebellis', password='df1559')
+                  user='xxxx', password='xxxxxx')
 
 # Set up variables bound to various classes and properties needed for this file
 creator_property = conn.createURI("http://purl.org/dc/terms/creator")
