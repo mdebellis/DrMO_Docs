@@ -4,7 +4,7 @@ import uuid
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
 conn = ag_connect(repo='drmo', host='localhost', port='10035',
-                  user='xxxx', password='xxxxxx')
+                  user='xxxxxxxx', password='xxxxx')
 
 # Set up variables bound to various classes and properties needed for this file
 creator_property = conn.createURI("http://purl.org/dc/terms/creator")
@@ -45,6 +45,7 @@ def find_or_make_author_object(first_name, last_name):
         for author_statement in author_statements:
             return author_statement.Subject()
     else:
+        print("Author label:", author_label)
         author_iri = conn.createURI(domain_ont_str + str(uuid.uuid4()))
         conn.add(author_iri, RDF.TYPE, person_class)
         conn.add(author_iri, rdfs_label_prop, author_label)
@@ -56,47 +57,66 @@ def find_or_make_author_object(first_name, last_name):
 def process_authors(document, author_string):
     print(author_string)
     author = None
+    author_list = []
     if ";" in author_string:
-        author_list = author_string.split(";")
-        print(author_list)
-        if len(author_list) < 2:
+        author_list_un_stripped = author_string.split(";")
+        for author_string in author_list_un_stripped:
+            author_list.append(author_string.strip())
+        print("Stripped string list:", author_list)
+        if len(author_list) == 2 and " " not in author_list[0]:
             last_name = author_list[0]
-            first_name = author_list[0]
+            first_name = author_list[1]
             author = find_or_make_author_object(first_name, last_name)
-        for author in author_list:
-            if "," in author:
-                name_list = author.split(",")
-                last_name = name_list[0]
-                first_name = name_list[1]
-                author = find_or_make_author_object(first_name, last_name)
-            else:
-                name_list = author.split(" ")
-                last_name = name_list[0]
-                first_name = name_list[1]
-                author = find_or_make_author_object(first_name, last_name)
+        elif len(author_list) < 2:
+            last_name = author_list[0]
+            first_name = ""
+            author = find_or_make_author_object(first_name, last_name)
+        else:
+            for author in author_list:
+                if "," in author:
+                    name_list = author.split(",")
+                    last_name = name_list[0]
+                    first_name = name_list[1]
+                    author = find_or_make_author_object(first_name, last_name)
+                elif " " in author:
+                    name_list = author.split(" ")
+                    last_name = name_list[0]
+                    first_name = name_list[1]
+                    author = find_or_make_author_object(first_name, last_name)
+                else:
+                    last_name = author[0]
+                    first_name = ""
+                    author = find_or_make_author_object(first_name, last_name)
     elif "," in author_string:
-        author_list = author_string.split(",")
-        print(author_list)
-        if len(author_list) < 2:
+        author_list_un_stripped = author_string.split(",")
+        for author_string in author_list_un_stripped:
+            author_list.append(author_string.strip())
+        print("Stripped string list:", author_list)
+        if len(author_list) == 2 and " " not in author_list[0]:
             last_name = author_list[0]
-            first_name = author_list[0]
+            first_name = author_list[1]
             author = find_or_make_author_object(first_name, last_name)
-        for author in author_list:
-            if "," in author:
-                name_list = author.split(",")
-                last_name = name_list[0]
-                first_name = name_list[1]
-                author = find_or_make_author_object(first_name, last_name)
-            else:
-                name_list = author.split(" ")
-                last_name = name_list[0]
-                first_name = name_list[1]
-                author = find_or_make_author_object(first_name, last_name)
+        elif len(author_list) < 2:
+            last_name = author_list[0]
+            first_name = ""
+            author = find_or_make_author_object(first_name, last_name)
+        else:
+            for author in author_list:
+                if "," in author:
+                    name_list = author.split(",")
+                    last_name = name_list[0]
+                    first_name = name_list[1]
+                    author = find_or_make_author_object(first_name, last_name)
+                else:
+                    name_list = author.split(" ")
+                    last_name = name_list[0]
+                    first_name = name_list[1]
+                    author = find_or_make_author_object(first_name, last_name)
     conn.add(document, has_author_prop, author)
 
 
 
 
-#process_authors("document", author_string_0)
 
 add_authors()
+
