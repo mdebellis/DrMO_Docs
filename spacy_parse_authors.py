@@ -123,6 +123,8 @@ def add_authors():
 # Takes string for first and last name (first name can be initials) and returns an author object if one exists
 # If one doesn't exist it is created and the appropriate properties are set
 def find_or_make_author_object(first_name, last_name):
+    author_label = first_name + " " + last_name
+    author_statements = conn.getStatements(None, rdfs_label_prop, author_label)
     author_iri_string = domain_ont_str + first_name + last_name
     author_iri = conn.createURI(author_iri_string)
     author_type_statements = conn.getStatements(author_iri, RDF.TYPE, None)
