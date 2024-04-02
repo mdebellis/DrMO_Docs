@@ -61,7 +61,8 @@ def find_or_make_author_object(first_name, last_name):
         conn.add(author_iri, last_name_prop, last_name)
         return author_iri
 
-
+# For testing use this ontology: https://github.com/mdebellis/DrMO_Docs/commits/main/Ontologies/drmo_na_3_29_24.ttl
+# It has documents but no authors
 def process_authors(document, author_string):
     print(author_string)
     author = None
