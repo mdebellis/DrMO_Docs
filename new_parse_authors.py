@@ -45,10 +45,11 @@ def find_or_make_author_object(first_name, last_name):
         author_label = first_name + " " + last_name
     else:
         author_label = last_name
-    author_statements = conn.getStatements(conn.createLiteral(author_label), rdfs_label_prop, None)
+    author_statements = conn.getStatements(None, rdfs_label_prop, author_label)
     if len(author_statements) > 0:
         for author_statement in author_statements:
-            return author_statement.Subject()
+            print("Found author: ", author_label)
+            return author_statement.getSubject()
     else:
         print("Author label:", author_label)
         author_iri = conn.createURI(domain_ont_str + str(uuid.uuid4()))
