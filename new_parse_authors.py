@@ -4,7 +4,7 @@ import uuid
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
 conn = ag_connect(repo='drmo', host='localhost', port='10035',
-                  user='mdebellis', password='df1559')
+                  user='XXXXXX', password='XXXXX')
 
 # Set up variables bound to various classes and properties needed for this file
 creator_property = conn.createURI("http://purl.org/dc/terms/creator")
@@ -38,6 +38,8 @@ def add_authors():
 
 # Takes string for first and last name (first name can be initials) and returns an author object if one exists
 # If one doesn't exist it is created and the appropriate properties are set
+# It would be nice to make the test more flexible. E.g., so that "DeWaal", "De Waal", "deWaal", "Dewaal", and "De-Waal" are all considered the same
+# To make this flexible might want to change the line below from getStatements to a SPARQL query with a regex in the query
 def find_or_make_author_object(first_name, last_name):
     first_name = first_name.strip()
     last_name = last_name.strip()
@@ -45,66 +47,66 @@ def find_or_make_author_object(first_name, last_name):
         author_label = first_name + " " + last_name
     else:
         author_label = last_name
-    author_statements = conn.getStatements(None, rdfs_label_prop, author_label)
+    author_statements = conn.getStatements(None, rdfs_label_prop, author_label) # This tests if any existing objects have the name of the current author
     if len(author_statements) > 0:
         for author_statement in author_statements:
             print("Found author: ", author_label)
             return author_statement.getSubject()
     else:
         print("Author label:", author_label)
-        author_iri = conn.createURI(domain_ont_str + str(uuid.uuid4()))
+        author_iri = conn.createURI(domain_ont_str + str(uuid.uuid4()))  # Creates a UUID for the IRI for a new instance of Person
         conn.add(author_iri, RDF.TYPE, person_class)
         conn.add(author_iri, rdfs_label_prop, author_label)
         conn.add(author_iri, first_name_prop, first_name)
         conn.add(author_iri, last_name_prop, last_name)
         return author_iri
 
-# Process author strings with semicolons
+
 def process_authors(document, author_string):
     print(author_string)
     author = None
     author_list = []
-    if ";" in author_string:
+    if ";" in author_string:  # First test is if there is a semi-colon to delimit names of authors
         author_list_un_stripped = author_string.split(";")
-        for author_string in author_list_un_stripped:
+        for author_string in author_list_un_stripped:  # Need to test for blank space as a delimiter so want to strip out leading and trailing blanks
             author_list.append(author_string.strip())
         print("Stripped string list:", author_list)
-        if len(author_list) == 2 and " " not in author_list[0]:
-            last_name = author_list[0]
+        if len(author_list) == 2 and " " not in author_list[0]: # In hindsight don't think this code is needed. This is to test for one author but
+            last_name = author_list[0]                          # if only one author there wouldn't be a semi-colon anyway
             first_name = author_list[1]
             author = find_or_make_author_object(first_name, last_name)
             conn.add(document, has_author_prop, author)
-        elif len(author_list) < 2:
-            last_name = author_list[0]
+        elif len(author_list) < 2:                       # Don't think this is needed either. To test for single author with one name
+            last_name = author_list[0]                   # as above if that's the case, there won't be a semi-colon to begin with
             first_name = ""
             author = find_or_make_author_object(first_name, last_name)
             conn.add(document, has_author_prop, author)
         else:
             for author in author_list:
-                if "," in author:
+                if "," in author:                    # For author first and last delimited by comma. e.g., "Chomsky, Noam"
                     name_list = author.split(",")
                     last_name = name_list[0]
                     first_name = name_list[1]
                     author = find_or_make_author_object(first_name, last_name)
                     conn.add(document, has_author_prop, author)
-                elif " " in author:
+                elif " " in author:                  # For author first and last delimited by space. e.g., "Chomsky Noam"
                     name_list = author.split(" ")
                     last_name = name_list[0]
                     first_name = name_list[1]
                     author = find_or_make_author_object(first_name, last_name)
                     conn.add(document, has_author_prop, author)
-                else:
+                else:                               # When there is only a last name (no delimiter) e.g., "Turing, Alan; Hauser; Chomsky, Noam"
                     last_name = author[0]
                     first_name = ""
                     author = find_or_make_author_object(first_name, last_name)
                     conn.add(document, has_author_prop, author)
-    elif "," in author_string:
+    elif "," in author_string:   # Next test is if a comma is used to delimit authors
         author_list_un_stripped = author_string.split(",")
         for author_string in author_list_un_stripped:
-            author_list.append(author_string.strip())
+            author_list.append(author_string.strip())  #Need to test for blank space as a delimiter so want to strip out leading and trailing blanks
         print("Stripped string list:", author_list)
-        if len(author_list) == 2 and " " not in author_list[0]:
-            last_name = author_list[0]
+        if len(author_list) == 2 and " " not in author_list[0]:   # This was to test when there is only one author but won't always work because there still may be
+            last_name = author_list[0]                            # a blank. Will work if the entire string is "Chomsky,Noam" but not if it is "Chomsky, Noam"
             first_name = author_list[1]
             author = find_or_make_author_object(first_name, last_name)
             conn.add(document, has_author_prop, author)
@@ -114,22 +116,23 @@ def process_authors(document, author_string):
             author = find_or_make_author_object(first_name, last_name)
             conn.add(document, has_author_prop, author)
         else:
-            for author_string in author_list:
-                if "," in author_string:
+            for author_string in author_list:                   # Standard case where both full names and first, last are delimited by commas
+                if "," in author_string:                        # e.g., "Turing, Alan, Chomsky, Noam"
                     name_list = author_string.split(",")
                     last_name = name_list[0]
                     first_name = name_list[1]
                     author = find_or_make_author_object(first_name, last_name)
                     conn.add(document, has_author_prop, author)
-                else:
-                    name_list = author_string.split(" ")
+                else:                                           # Where full names delimited by commas and last-first by spaces
+                    name_list = author_string.split(" ")        # e.g., "Turing Alan, Chomsky Noam"
                     last_name = name_list[0]
                     first_name = name_list[1]
                     author = find_or_make_author_object(first_name, last_name)
                     conn.add(document, has_author_prop, author)
 
-
-
+# Cases to add: 1) When there is just one name delimited by comma or string
+# Was trying to check for those in code above but don't think it is correct. e.g.,  when complete string is "Chomsky, Noam"
+# 2) When complete string is just a last name. E.g., "Chomsky"
 
 
 
