@@ -31,26 +31,51 @@ def get_value(instance, owl_property):
                 return statement.getObject()
             elif len(statements) == 1:
                 return statement.getObject()
-    print(f'Error: No property value for: {instance, owl_property}.')
+    print(f'Warning: No property value for: {instance, owl_property}.')
     return None
 
-def create_sub_section(section, heading, text):
+def create_sub_section(section, heading = None, text = None):
     sub_section = conn.createURI(domain_ont_str + str(uuid.uuid4()))
     conn.add(sub_section, RDF.TYPE, section_class)
-    conn.add(sub_section, heading_prop, heading)
-    conn.add(sub_section, rdfs_label_prop, heading)
-    conn.add(sub_section, text_prop, text)
+    if heading is not None:
+        conn.add(sub_section, heading_prop, heading)
+        conn.add(sub_section, rdfs_label_prop, heading)
+    if text is not None:
+        conn.add(sub_section, text_prop, text)
     conn.add(section, sub_section_prop, sub_section)
+    return sub_section
+
+# This is a shell function to demonstrate what I would like to do with the documents
+# In this example, I'm using a source document that represents some other data structure like
+# XML or HTML and then copies the structure from that document to an existing one.
+def create_sub_sections(source_section, parent_section):
+    sub_section_source_statements = conn.getStatements(source_section, sub_section_prop, None)
+    source_heading = get_value(source_section, heading_prop)
+    source_text = get_value(source_section, text_prop)
+    new_sub_section = create_sub_section(parent_section, source_heading, source_text)
+    section_set = set([section_statement.getObject() for section_statement in sub_section_source_statements])
+    print("Created sub section", source_heading)
+    for source_sub_section in section_set:
+        create_sub_sections(source_sub_section, new_sub_section)
+
 
 # Needed to create a set because graph was returning duplicates, not sure why
 def display_sub_section(section):
     print(get_value(section, heading_prop))
     sub_section_statements = conn.getStatements(section, sub_section_prop, None)
-    section_set = set()
-    for section_statement in sub_section_statements:
-        section_set.add(section_statement.getObject())
+    section_set = set([section_statement.getObject() for section_statement in sub_section_statements])
     for section in section_set:
         display_sub_section(section)
 
 
+def create_structured_document(source, document):
+    sub_section_statements = conn.getStatements(source, sub_section_prop, None)
+    section_set = set([section_statement.getObject() for section_statement in sub_section_statements])
+    document_text = get_value(source, text_prop)
+    if document_text:
+        conn.add(document, text_prop, document_text)
+    for section in section_set:
+        display_sub_section(section)
+
 display_sub_section(source_document)
+create_sub_sections(source_document, test_document)
