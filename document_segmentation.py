@@ -4,7 +4,7 @@ import uuid
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
 conn = ag_connect(repo='drmo', host='localhost', port='10035',
-                  user='mdebellis', password='df1559')
+                  user='xxxxxx', password='xxxxxx')
 
 # Set up variables bound to various classes and properties needed for this file
 section_class = conn.createURI("http://www.w3.org/ns/prov#Section")
@@ -67,15 +67,5 @@ def display_sub_section(section):
     for section in section_set:
         display_sub_section(section)
 
-
-def create_structured_document(source, document):
-    sub_section_statements = conn.getStatements(source, sub_section_prop, None)
-    section_set = set([section_statement.getObject() for section_statement in sub_section_statements])
-    document_text = get_value(source, text_prop)
-    if document_text:
-        conn.add(document, text_prop, document_text)
-    for section in section_set:
-        display_sub_section(section)
-
-display_sub_section(source_document)
+# display_sub_section(source_document)
 create_sub_sections(source_document, test_document)
