@@ -5,7 +5,7 @@ import csv
 import uuid
 
 conn = ag_connect(repo='drmo', host='localhost', port='10035',
-                  user='user', password='xxxxxx')
+                  user='xxxxxx', password='xxxxxx')
 domain_ont_str = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#"
 
 
@@ -16,7 +16,7 @@ owl_named_individual = conn.createURI("http://www.w3.org/2002/07/owl#NamedIndivi
 owl_datatype_property = conn.createURI("http://www.w3.org/2002/07/owl#DatatypeProperty")
 owl_annotation_property = conn.createURI("http://www.w3.org/2002/07/owl#AnnotationProperty")
 
-bpath = "./Corpus/DM 23 CDR 201-267.csv"
+bpath = "./Corpus/JD19-23RBCDR101-184.csv"
 # file_class is the IRI for the class that the properties in the csv file apply to. I.e.,
 # when parsing the file, the system will search for an instance of that class and if one is
 # not found, then it will be created.
