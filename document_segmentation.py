@@ -4,7 +4,7 @@ import uuid
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
 conn = ag_connect(repo='drmo', host='localhost', port='10035',
-                  user='xxxxxx', password='xxxxxx')
+                  user='xxxxx', password='xxxxxx')
 
 # Set up variables bound to various classes and properties needed for this file
 section_class = conn.createURI("http://www.w3.org/ns/prov#Section")
@@ -59,7 +59,11 @@ def create_sub_sections(source_section, parent_section):
         create_sub_sections(source_sub_section, new_sub_section)
 
 
-# Needed to create a set because graph was returning duplicates, not sure why
+# Needed to create a set because graph was returning duplicates, not sure why but the documentation says that is possible
+# See: https://franz.com/agraph/support/documentation/current/python/api.html#repositoryresult-class
+# It may have been an issue in the ontology I was working on. I hadn't thought of this at the time
+# but it's possible in buggy versions of the code I asserted new values on the source object rather than the TestDocument
+# but I don't thin so.
 def display_sub_section(section):
     print(get_value(section, heading_prop))
     sub_section_statements = conn.getStatements(section, sub_section_prop, None)
@@ -67,5 +71,5 @@ def display_sub_section(section):
     for section in section_set:
         display_sub_section(section)
 
-# display_sub_section(source_document)
-create_sub_sections(source_document, test_document)
+display_sub_section(source_document)
+#create_sub_sections(source_document, test_document)
