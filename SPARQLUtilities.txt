@@ -52,6 +52,21 @@ WHERE {?doc dct:source ?slabel.
        ?pub rdfs:label ?slabel.
 	   OPTIONAL{?doc drmo:publishedIn ?epub.}
 	   FILTER(!BOUND(?epub))}
+
+# Check for duplicate entities
+# This will take a while, need to extend SPARQL timeout
+SELECT *
+WHERE {?s1 rdfs:label ?label1.
+       ?s2 rdfs:label ?label2.
+FILTER(?s1 != ?s2 && ?label1 = ?label2)}
+
+# Delete duplicate entities
+# This will take a while, need to extend SPARQL timeout
+DELETE {?s2 ?p ?o.}
+WHERE {?s1 rdfs:label ?label1.
+       ?s2 rdfs:label ?label2.
+       ?s2 ?p ?o.
+FILTER(?s1 != ?s2 && ?label1 = ?label2)}
 	   
 # The following are to generate labels from the IRIs of objects with intuitive names. 
 # Run this after creating lots of new entities. It generates labels so you don't have to do it manually. 
