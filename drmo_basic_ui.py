@@ -5,7 +5,7 @@ from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 from franz.openrdf.query.query import QueryLanguage
 
-conn = ag_connect('drmo', host='localhost', port='10035', user='mdebellis', password='df1559')
+conn = ag_connect('drmo', host='localhost', port='XXXXX', user='XXXXX', password='XXXXXX')
 
 
 question = ""
