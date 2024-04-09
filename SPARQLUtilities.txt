@@ -54,17 +54,16 @@ WHERE {?doc dct:source ?slabel.
 	   FILTER(!BOUND(?epub))}
 
 # Check for duplicate entities
-# This will take a while, need to extend SPARQL timeout
 SELECT *
 WHERE {?s1 rdfs:label ?label.
        ?s2 rdfs:label ?label.
 FILTER(STR(?s1) < STR(?s2))}
 
 # Delete duplicate entities
-# This will take a while, need to extend SPARQL timeout
 DELETE {?s2 ?p ?o.}
 WHERE {?s1 rdfs:label ?label.
-       ?s2 rdfs:label ?label.
+       ?s2 rdfs:label ?label;
+	        ?p ?o.
 FILTER(STR(?s1) < STR(?s2))}
 	   
 # The following are to generate labels from the IRIs of objects with intuitive names. 
