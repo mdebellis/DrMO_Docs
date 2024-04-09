@@ -6,9 +6,13 @@ from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 
+
 # Set up WebDriver
 service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service)
+dict = {}
+
+
 
 # Navigate to the URL
 url = 'https://www.sciencedirect.com/science/article/pii/S0109564122003141'
@@ -34,8 +38,26 @@ driver.quit()
 soup = BeautifulSoup(html_content, 'html.parser')
 
 # Find all elements that have an id containing 'sec'
-section_elements = [element for element in soup.find_all(id=True) if 'sec' in element.get('id') or 'abs' in element.get('id')]
+#section_elements = [element for element in soup.find_all(id=True) if 'sec' in element.get('id') or 'abs' in element.get('id')]
+
+for section in soup.find_all('section'):
+    # Find the first h2 or h3 tag as the title of the section
+    title_tag = section.find(['h2', 'h3'])
+    if title_tag:
+        # Get the title text
+        title_text = title_tag.get_text(strip=True)
+        # Find all paragraph tags and concatenate their content
+        paragraphs = section.find_all('p')
+        content_text = ' '.join(p.get_text(strip=True) for p in paragraphs)
+        # Add to your dictionary
+        dict[title_text] = content_text
 
 # Extract and print the text content for each section
-print(section_elements[4].get_text(separator=' ', strip=True))
+
+print(dict)
+
+
+
+   
+    
 
