@@ -1,14 +1,14 @@
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 
-conn = ag_connect('people', host='localhost', port=10035, user='mdebellis', password='df1559')
+conn = ag_connect('people', host='localhost', port=10035, user='mdebellis', password='xxxxx')
 
-ontology_string = "https://www.semanticweb.org/mdebe/ontologies/example#"
+ontology_string = "http://www.semanticweb.org/mdebe/ontologies/example#"
 person_class = conn.createURI(ontology_string + "Person")
 owl_class = conn.createURI("http://www.w3.org/2002/07/owl#Class")
-rdfs_label_prop = conn.createURI("https://www.w3.org/2000/01/rdf-schema#label")
+rdfs_label_prop = conn.createURI("http://www.w3.org/2000/01/rdf-schema#label")
 has_author_prop = conn.createURI(ontology_string + "hasAuthor")
-owl_named_individual = conn.createURI("https://www.w3.org/2002/07/owl#NamedIndividual")
+owl_named_individual = conn.createURI("http://www.w3.org/2002/07/owl#NamedIndividual")
 
 
 def make_iri_string(iri_name):
@@ -112,4 +112,5 @@ def describe(entity):
 print(find_instance_from_iri('Jay_Gatsby'))
 print(find_class_from_string("Person"))
 print(find_instances_of_class('Person'))
+print(instance_of(find_instance_from_iri('Jay_Gatsby')))
 
