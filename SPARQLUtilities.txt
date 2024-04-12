@@ -67,7 +67,10 @@ WHERE {?s1 rdfs:label ?label.
 FILTER(STR(?s1) < STR(?s2))}
 	   
 # The following are to generate labels from the IRIs of objects with intuitive names. 
-# Run this after creating lots of new entities. It generates labels so you don't have to do it manually. 
+# Run this after creating lots of new entities. It generates labels so you don't have to do it manually.
+# Uses CONSTRUCT so that it can run in Snap SPARQL in Protege. If running in AllegroGraph change
+# CONSTRUCT to INSERT. Also, doesn't handle acronyms correctly. e.g. a class like CDCEmployee
+# would get the label: "C D C Employee" I just change those by hand. 
 
 #Create labels from IRIs for all Individuals with no label		
 CONSTRUCT {?i rdfs:label ?lblname.}
@@ -78,7 +81,14 @@ WHERE {?i a owl:Thing.
 	OPTIONAL{?i rdfs:label ?elbl.}
 	FILTER(!BOUND(?elbl) &&  ?lblname != "")}
 
-		
+#Create labels for all Classes
+CONSTRUCT {?c rdfs:label ?lblname.}
+WHERE {?c rdfs:subClassOf owl:Thing.
+    BIND(STRAFTER(STR(?c), '#') as ?name)
+	BIND(REPLACE(?name,"([A-Z])", " $1" ) as ?namewbs)
+	BIND (IF (STRSTARTS(?namewbs," "),SUBSTR(?namewbs,1),?namewbs) AS ?lblname)
+	OPTIONAL{?c rdfs:label ?elbl.}
+	FILTER(?c != owl:Thing && ?c != owl:Nothing && !BOUND(?elbl) && ?lblname != "")}		
 
 #Create labels for all Object Properties
 CONSTRUCT {?p rdfs:label ?lblname.}
