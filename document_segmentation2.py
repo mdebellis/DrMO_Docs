@@ -18,7 +18,11 @@ iri_prop = conn.createURI("http://purl.org/ontology/bibo/uri")
 heading_prop = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#heading")
 source_document = conn.createURI(
     "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#SearchUsingLLMAndOntology")
-test_document = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#TestDocument")
+test_document1 = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#25ecc441-690e-4743-8350-cf5e177fa696")
+test_document2 = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#642d4db4-25a0-41fa-a635-3b722c533f1e")
+test_document3 = conn.createURI("https://www.sciencedirect.com/science/article/pii/S0109564123000209")
+
+
 
 
 # Gets the value of a single valued property using the IRI name of the instance and the IRI name of the property
@@ -43,7 +47,7 @@ def get_value(instance, owl_property, debug=False):
     return None
 
 
-def create_sub_sections(document, heading=None, text=None):
+def create_sub_section(document, heading=None, text=None):
     sub_section = conn.createURI(domain_ont_str + str(uuid.uuid4()))
     conn.add(sub_section, RDF.TYPE, section_class)
     if heading is not None:
@@ -94,7 +98,7 @@ def build_sections_for_document(document):
     document_iri = get_value(document, iri_prop)
     documentDict = dp.parseDocuments(document_iri)
     for key in documentDict:
-        section = create_sub_sections(document, key, documentDict[key])
+        section = create_sub_section(document, key, documentDict[key])
 
     print("Document IRI:", document_iri)
 
