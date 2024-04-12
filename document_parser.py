@@ -59,8 +59,11 @@ def parseDocuments(document_url):
 
 
 
-
-
+document1_dictionary = parseDocuments('https://www.sciencedirect.com/science/article/pii/S0109564123000258')
+doc1_sec1_text = list(document1_dictionary.values())
+doc1_sec1 = list(document1_dictionary.keys())
+print(doc1_sec1_text[0])
+print(doc1_sec1[0])
 
 
 
