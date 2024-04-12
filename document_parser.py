@@ -5,6 +5,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
+from selenium.common.exceptions import TimeoutException
 
 
 
@@ -22,7 +23,7 @@ def parseDocuments(document_url):
 # You should replace 'someElementID' with an ID of an element known to appear late in the page load process
     try:
         WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located((By.ID, 'sect0045'))
+            EC.presence_of_element_located((By.ID, 'sect0075'))
         )
     except TimeoutException:
         print("Timed out waiting for page to load")
