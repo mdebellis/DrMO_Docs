@@ -7,7 +7,32 @@ PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX bib: <http://purl.org/ontology/bibo/uri>
 PREFIX mesh: <http://purl.bioontology.org/ontology/MESH/>
 
-# The first 6 are to do strings to things after loading new documents 
+# Adding some queries to just display data
+# Documents with sub-sections and text
+SELECT *
+WHERE {?document drmo:hasSubSection ?section.
+       ?section drmo:text ?text.}
+
+# Documents and authors need labels because IRIs are usually UUIDs	   
+SELECT ?doclabel ?authorlabel
+WHERE {?document drmo:hasAuthor ?author;
+                 rdfs:label ?doclabel.
+	    ?author rdfs:label ?authorlabel.} ORDER BY ?doclabel
+
+# Documents that have isAbout links to domain entities
+# Love those highly intuitive OBO IRIs ;-)
+SELECT *
+WHERE {?document obo:IAO_0000136 ?entity.}
+
+# All documents and most relevant info
+SELECT *
+WHERE {?document a drmo:Document.
+OPTIONAL{?document drmo:hasSubSection ?section.
+       ?section drmo:text ?text.}
+OPTIONAL {?document drmo:hasAuthor ?author.}
+OPTIONAL {?document obo:IAO_0000136 ?entity.}}
+
+# The next 6 are to do strings to things after loading new documents 
 # 1. View titles for docs with no labels
 SELECT *
 WHERE {?doc a drmo:Document;
