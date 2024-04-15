@@ -8,7 +8,7 @@ conn = ag_connect(repo='drmo', host='localhost', port='10035',
                   user='XXXXXXX', password='XXXXXXX')
 
 # Set up variables bound to various classes and properties needed for this file
-section_class = conn.createURI("http://www.w3.org/ns/prov#Section")
+section_class = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Section")
 document_class = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Document")
 domain_ont_str = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#"
 rdfs_label_prop = conn.createURI("http://www.w3.org/2000/01/rdf-schema#label")
