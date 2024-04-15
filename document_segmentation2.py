@@ -2,10 +2,25 @@ from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 import uuid
 import document_parser as dp
+import os
+import csv
+import re
+import time
+
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
+from bs4 import BeautifulSoup
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
+
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
 conn = ag_connect(repo='drmo', host='localhost', port=10035,
-                  user='mdebellis', password='df1559')
+                  user='test', password='xyzzy')
 
 # Set up variables bound to various classes and properties needed for this file
 section_class = conn.createURI("http://www.w3.org/ns/prov#Section")
@@ -21,6 +36,15 @@ source_document = conn.createURI(
 test_document1 = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#25ecc441-690e-4743-8350-cf5e177fa696")
 test_document2 = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#642d4db4-25a0-41fa-a635-3b722c533f1e")
 test_document3 = conn.createURI("https://www.sciencedirect.com/science/article/pii/S0109564123000209")
+
+directory_path = 'Corpus/Processed Corpus Docs/'
+
+sciencedirect_link_pattern = re.compile(r'https?://www\.sciencedirect\.com/science/article/pii/\S+')
+ # Enables headless mode
+
+
+service = Service(ChromeDriverManager().install())
+driver = webdriver.Chrome(service=service)
 
 
 
@@ -93,13 +117,64 @@ def add_sections_for_documents():
                 print("Document already has content:", next_document)
 
 
-# This function is used to build the sections for a document. It uses the document parser to get the sections
-def build_sections_for_document(document):
-    document_iri = get_value(document, iri_prop)
-    documentDict = dp.parseDocuments(document_iri)
-    for key in documentDict:
-        section = create_sub_section(document, key, documentDict[key])
+def extract_sciencedirect_links_from_directory(directory_path):
+    all_links = []
+    # List all files in the specified directory
+    for file_name in os.listdir(directory_path):
+        if file_name.endswith('.csv'):  # Check for .csv extension
+            # Construct full file path
+            file_path = os.path.join(directory_path, file_name)
+            # Extract links from this CSV file
+            links = extract_sciencedirect_links(file_path)
+            # Extend the list of all links with links from this file
+            all_links.extend(links)
+    return all_links
 
-    print("Document IRI:", document_iri)
+# Function to extract ScienceDirect links from a single CSV file
+def extract_sciencedirect_links(csv_file_path):
+    links = []
+    with open(csv_file_path, mode='r', encoding='utf-8') as file:
+        reader = csv.reader(file)
+        for row in reader:
+            for cell in row:
+                links.extend(sciencedirect_link_pattern.findall(cell))
+    return links
+
+
+# This function is used to build the sections for a document. It uses the document parser to get the sections
+def build_sections_for_document(driver,urlLink):
+
+    document_class = conn.createURI(urlLink)
+    documentDict = dp.parseDocuments(urlLink,driver)  
+    doc_secs_texts = list(documentDict.values())
+    doc_secs = list(documentDict.keys())
+    for i in range(len(doc_secs)):
+        section = create_sub_section(document_class, doc_secs[i], doc_secs_texts[i])
+
+start_index = 130
+
+try:
+    all_links = extract_sciencedirect_links_from_directory(directory_path)
+    total_start_time = time.time()
+
+    for i, link in enumerate(all_links):
+
+        if i >= start_index:
+            link_start_time = time.time()
+
+            print(f"Processing link {i+1}/{len(all_links)}: {link}")
+            build_sections_for_document(driver,link)
+            link_end_time = time.time()  # End time for the current link
+            time_taken = link_end_time - link_start_time
+            print(f"Time taken for link {i+1}: {time_taken:.2f} seconds")
+            print("Estimated time left: " + str((1038*time_taken)/60) + " minutes")
+
+
+finally:
+    driver.quit() 
+
+    
+
+
 
 
