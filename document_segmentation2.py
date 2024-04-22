@@ -19,8 +19,7 @@ from selenium.webdriver.chrome.options import Options
 
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
-conn = ag_connect(repo='drmo', host='localhost', port=10035,
-                  user='test', password='xyzzy')
+conn = ag_connect(repo='drmo', host='localhost', port=10035, user='XXXXXX', password='XXXXXXXXX')
 
 # Set up variables bound to various classes and properties needed for this file
 section_class = conn.createURI("http://www.w3.org/ns/prov#Section")
@@ -70,6 +69,23 @@ def get_value(instance, owl_property, debug=False):
         print(f'Warning: No property value for: {instance, owl_property}.')
     return None
 
+# When getting values that are datatypes there is all sorts of extra stuff we usually want to strip out
+# E.g., in the dest data below the result of get_value("MichaelDeBellis", "email") will be: "mdebellissf@gmail.com"^^<http://www.w3.org/2001/XMLSchema#anyURI>
+# this should strip out the datatype and extra string characters so will return mdebelissf@gmail.com
+def convert_to_string (literal):
+        literal = str(literal)
+        if "^" in literal:
+            literal = literal.replace(literal[literal.find("^") + len("^"):], '') #remove the datatype
+            literal = literal[1:len(literal) - 2] # remove the string characters and the remaining ^
+        return literal
+
+
+def get_url_for_document(document):
+    url_string = get_value(document, iri_prop)
+    if url_string is None:
+        return None
+    else:
+        return convert_to_string(url_string)
 
 def create_sub_section(document, heading=None, text=None):
     sub_section = conn.createURI(domain_ont_str + str(uuid.uuid4()))
@@ -81,9 +97,6 @@ def create_sub_section(document, heading=None, text=None):
         conn.add(sub_section, text_prop, text)
     conn.add(document, sub_section_prop, sub_section)
     return sub_section
-
-
-
 
 
 # Needed to create a set because graph was returning duplicates, not sure why but the documentation says that is possible
@@ -176,5 +189,5 @@ finally:
     
 
 
-
+get_url_for_document(test_document1)
 
