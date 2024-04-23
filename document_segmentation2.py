@@ -19,7 +19,7 @@ from selenium.webdriver.chrome.options import Options
 
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
-conn = ag_connect(repo='drmo', host='localhost', port=10035, user='XXXXXX', password='XXXXXXXXX')
+conn = ag_connect(repo='drmo', host='localhost', port=10035, user='test', password='xyzzy')
 
 # Set up variables bound to various classes and properties needed for this file
 section_class = conn.createURI("http://www.w3.org/ns/prov#Section")
@@ -39,11 +39,13 @@ test_document3 = conn.createURI("https://www.sciencedirect.com/science/article/p
 directory_path = 'Corpus/Processed Corpus Docs/'
 
 sciencedirect_link_pattern = re.compile(r'https?://www\.sciencedirect\.com/science/article/pii/\S+')
+
+
  # Enables headless mode
 
 
 service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)
+
 
 
 
@@ -125,7 +127,10 @@ def add_sections_for_documents():
             doc_text = get_value(next_document, text_prop)
             doc_segments = conn.getStatements(next_document, sub_section_prop, None)
             if doc_text is None and len(doc_segments) == 0:
-                build_sections_for_document(next_document)
+                driver = webdriver.Chrome(service=service)
+                build_sections_for_document(driver,next_document)
+                
+                
             else:
                 print("Document already has content:", next_document)
 
@@ -155,39 +160,37 @@ def extract_sciencedirect_links(csv_file_path):
 
 
 # This function is used to build the sections for a document. It uses the document parser to get the sections
-def build_sections_for_document(driver,urlLink):
 
-    document_class = conn.createURI(urlLink)
-    documentDict = dp.parseDocuments(urlLink,driver)  
-    doc_secs_texts = list(documentDict.values())
-    doc_secs = list(documentDict.keys())
-    for i in range(len(doc_secs)):
-        section = create_sub_section(document_class, doc_secs[i], doc_secs_texts[i])
+def build_sections_for_document(driver, documentObject):  
+    start_time = time.time()
+    document_url = get_url_for_document(documentObject)
+    document_url = document_url[1:]
+    documentDict = dp.parseDocuments(document_url,driver) 
+    
+    if(documentDict != False):
+        doc_secs_texts = list(documentDict.values())
+        doc_secs = list(documentDict.keys())
+        for i in range(len(doc_secs)):
+            section = create_sub_section(documentObject, doc_secs[i], doc_secs_texts[i])
+        end_time = time.time()
+        duration = end_time - start_time
+        print(duration)
+    else:
+        print("Skipped parsing")
 
-start_index = 130
-
-try:
-    all_links = extract_sciencedirect_links_from_directory(directory_path)
-    total_start_time = time.time()
-
-    for i, link in enumerate(all_links):
-
-        if i >= start_index:
-            link_start_time = time.time()
-
-            print(f"Processing link {i+1}/{len(all_links)}: {link}")
-            build_sections_for_document(driver,link)
-            link_end_time = time.time()  # End time for the current link
-            time_taken = link_end_time - link_start_time
-            print(f"Time taken for link {i+1}: {time_taken:.2f} seconds")
-            print("Estimated time left: " + str((1038*time_taken)/60) + " minutes")
+   
+    driver.quit()
+    
 
 
-finally:
-    driver.quit() 
+
+
+add_sections_for_documents()
+
+
 
     
 
 
-get_url_for_document(test_document1)
+
 

@@ -7,6 +7,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.chrome.options import Options
+#import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException
+
 
 chrome_options = Options()
 chrome_options.add_argument("--headless")  # Enables headless mode
@@ -18,9 +21,9 @@ chrome_options.add_argument("--window-size=1920x1080")
 
 # Set up WebDriver
 
-dict = {}
 
-def extract_content(section):
+
+def extract_content(section,dict):
     # Find the first h2 or h3 tag as the title of the section
     title_tag = section.find(['h2', 'h3'])
     if title_tag:
@@ -33,6 +36,7 @@ def extract_content(section):
         dict[title_text] = content_text
 
 def parseDocuments(document_url,driver):
+    dict = {}
     url = document_url
     driver.get(url)
 
@@ -46,8 +50,16 @@ def parseDocuments(document_url,driver):
         )
     
     except TimeoutException:
-        print("Timed out waiting for page to load")
-        driver.quit()
+        print("couldnt parse")
+        return False
+    
+    try:
+        # Check if the PDF viewer is present on the page
+        driver.find_element(By.CLASS_NAME, "PdfEmbed")
+        print("PDF viewer detected, skipping this document.")
+        return False  # Return an empty dict to indicate skipping
+    except NoSuchElementException:
+        pass
 
     # Get the HTML content
     html_content = driver.page_source
@@ -61,18 +73,19 @@ def parseDocuments(document_url,driver):
     # Find all elements that have an id containing 'sec'
     #section_elements = [element for element in soup.find_all(id=True) if 'sec' in element.get('id') or 'abs' in element.get('id')]
 
+
     for section in soup.find_all(lambda tag: tag.name == 'section' and 'cesectitle' in tag.get('id', '')):
-        extract_content(section)
+        extract_content(section,dict)
     
     for section in soup.find_all('section'):
-        extract_content(section)
+        extract_content(section,dict)
 
 
 
   
 
-
     return dict
+
 
 
 
