@@ -22,7 +22,7 @@ from selenium.webdriver.chrome.options import Options
 conn = ag_connect(repo='drmo', host='localhost', port=10035, user='test', password='xyzzy')
 
 # Set up variables bound to various classes and properties needed for this file
-section_class = conn.createURI("http://www.w3.org/ns/prov#Section")
+section_class = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Section")
 document_class = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Document")
 domain_ont_str = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#"
 rdfs_label_prop = conn.createURI("http://www.w3.org/2000/01/rdf-schema#label")
@@ -161,7 +161,8 @@ def extract_sciencedirect_links(csv_file_path):
 
 # This function is used to build the sections for a document. It uses the document parser to get the sections
 
-def build_sections_for_document(driver, documentObject):  
+def build_sections_for_document(driver, documentObject):
+    counter = 0
     start_time = time.time()
     document_url = get_url_for_document(documentObject)
     document_url = document_url[1:]
@@ -175,6 +176,7 @@ def build_sections_for_document(driver, documentObject):
         end_time = time.time()
         duration = end_time - start_time
         print(duration)
+        print("Esimtated time remaining: ", ((duration*1000) - (counter*8)) / 60, " minutes")
     else:
         print("Skipped parsing")
 
