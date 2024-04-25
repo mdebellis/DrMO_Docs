@@ -5,42 +5,25 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from webdriver_manager.chrome import ChromeDriverManager
 from bs4 import BeautifulSoup
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.chrome.options import Options
+#import NoSuchElementException
+from selenium.common.exceptions import NoSuchElementException
+
+
+chrome_options = Options()
+chrome_options.add_argument("--headless")  # Enables headless mode
+chrome_options.add_argument("--disable-gpu")  # Disables GPU hardware acceleration
+chrome_options.add_argument("--window-size=1920x1080")  
+
+
 
 
 # Set up WebDriver
-service = Service(ChromeDriverManager().install())
-driver = webdriver.Chrome(service=service)
-dict = {}
 
 
 
-# Navigate to the URL
-url = 'https://www.sciencedirect.com/science/article/pii/S0109564122003141'
-driver.get(url)
-
-# Wait for the whole page to load by waiting for a specific element to appear
-# You should replace 'someElementID' with an ID of an element known to appear late in the page load process
-try:
-    WebDriverWait(driver, 10).until(
-        EC.presence_of_element_located((By.ID, 'sect0045'))
-    )
-except TimeoutException:
-    print("Timed out waiting for page to load")
-    driver.quit()
-
-# Get the HTML content
-html_content = driver.page_source
-
-# Close the browser
-driver.quit()
-
-# Parse the HTML content with BeautifulSoup
-soup = BeautifulSoup(html_content, 'html.parser')
-
-# Find all elements that have an id containing 'sec'
-#section_elements = [element for element in soup.find_all(id=True) if 'sec' in element.get('id') or 'abs' in element.get('id')]
-
-for section in soup.find_all('section'):
+def extract_content(section,dict):
     # Find the first h2 or h3 tag as the title of the section
     title_tag = section.find(['h2', 'h3'])
     if title_tag:
@@ -52,9 +35,63 @@ for section in soup.find_all('section'):
         # Add to your dictionary
         dict[title_text] = content_text
 
-# Extract and print the text content for each section
+def parseDocuments(document_url,driver):
+    dict = {}
+    url = document_url
+    driver.get(url)
 
-print(dict)
+# Wait for the whole page to load by waiting for a specific element to appear
+# You should replace 'someElementID' with an ID of an element known to appear late in the page load process
+    
+  
+    try:
+        WebDriverWait(driver, 10).until(
+            lambda d: d.find_element(By.XPATH, "//*[contains(@id, 'bib')]")
+        )
+    
+    except TimeoutException:
+        print("couldnt parse")
+        return False
+    
+    try:
+        # Check if the PDF viewer is present on the page
+        driver.find_element(By.CLASS_NAME, "PdfEmbed")
+        print("PDF viewer detected, skipping this document.")
+        return False  # Return an empty dict to indicate skipping
+    except NoSuchElementException:
+        pass
+
+    # Get the HTML content
+    html_content = driver.page_source
+
+    # Close the browser
+
+
+    # Parse the HTML content with BeautifulSoup
+    soup = BeautifulSoup(html_content, 'html.parser')
+
+    # Find all elements that have an id containing 'sec'
+    #section_elements = [element for element in soup.find_all(id=True) if 'sec' in element.get('id') or 'abs' in element.get('id')]
+
+
+    for section in soup.find_all(lambda tag: tag.name == 'section' and 'cesectitle' in tag.get('id', '')):
+        extract_content(section,dict)
+    
+    for section in soup.find_all('section'):
+        extract_content(section,dict)
+
+
+
+  
+
+    return dict
+
+
+
+
+
+
+
 
 
 

@@ -1,13 +1,14 @@
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 import uuid
+import document_parser as dp
 
 # Create a connection object and bind to conn. The conn object is used to connect with an AllegroGraph repository
 conn = ag_connect(repo='drmo', host='localhost', port='10035',
                   user='XXXXXXX', password='XXXXXXX')
 
 # Set up variables bound to various classes and properties needed for this file
-section_class = conn.createURI("http://www.w3.org/ns/prov#Section")
+section_class = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Section")
 document_class = conn.createURI("http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#Document")
 domain_ont_str = "http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#"
 rdfs_label_prop = conn.createURI("http://www.w3.org/2000/01/rdf-schema#label")
@@ -93,9 +94,17 @@ def add_sections_for_documents():
             else:
                 print("Document already has content:", next_document)
 
+# This function is used to build the sections for a document. It uses the document parser to get the sections
 def build_sections_for_document(document, doc_segments):
     document_iri = get_value(document, iri_prop)
+    documentDict = dp.parseDocuments(document_iri)
+    for key in documentDict:
+        section = create_sub_section(document, key, documentDict[key])
+
+    
     print("Document IRI:", document_iri)
+
+
 
 
 

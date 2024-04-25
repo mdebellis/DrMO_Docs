@@ -28,7 +28,7 @@ def build_query(user_question):
         return ""
     else:
         query_string1 = "PREFIX franzOption_openaiApiKey: <franz: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> "
-        query_string1 = query_string1 + "PREFIX drmo: <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo#> "
+        query_string1 = query_string1 + "PREFIX drmo: <http://www.semanticweb.org/ontologies/2022/titutuli/nivedita/drmo/> "
         query_string1 = query_string1 + "PREFIX llm: <http://franz.com/ns/allegrograph/8.0.0/llm/> "
         query_string1 = query_string1 + "SELECT  * WHERE {bind(\"" + user_question
         query_string2 = "\" as ?query) "
