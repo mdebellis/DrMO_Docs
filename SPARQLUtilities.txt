@@ -130,3 +130,18 @@ WHERE {?p a owl:DatatypeProperty.
 	BIND(REPLACE(?name,"([A-Z])", " $1" ) as ?lblname)		
 	OPTIONAL{?p rdfs:label ?elbl.}
 	FILTER(?p != owl:topDataProperty && !BOUND(?elbl) &&  ?lblname != "")}	
+	
+# List all the instances and their property values this will be a lot of triples
+# So best to use with some limit
+SELECT *
+WHERE {?i rdf:type owl:NamedIndividual;
+          ?p ?o.
+		?s ?p1 ?i.} LIMIT 1000
+		
+# DELETE all the instances and their property values
+# Can use query above to make sure this works
+DELETE {?i ?p ?o.
+         ?s ?p1 ?i.}
+WHERE {?i rdf:type owl:NamedIndividual;
+          ?p ?o.
+		?s ?p1 ?i.} 
