@@ -1,8 +1,6 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
+import pyperclip
 from franz.openrdf.connect import ag_connect
-from franz.openrdf.vocabulary import RDF
 from franz.openrdf.query.query import QueryLanguage
 
 conn = ag_connect('drmo', host='localhost', port='XXXXX', user='XXXXX', password='XXXXXX')
@@ -10,12 +8,13 @@ conn = ag_connect('drmo', host='localhost', port='XXXXX', user='XXXXX', password
 
 question = ""
 
-
+# Using pyperclip to copy the generated query to copy/paste stack. A hack until (someday!) will get Gruff link working
 def do_query(user_question):
     if user_question == None:
         return ""
     else:
         query_string = build_query(str(user_question))
+        pyperclip.copy(query_string)
         tuple_query = conn.prepareTupleQuery(QueryLanguage.SPARQL, query_string)
         result = tuple_query.evaluate()
         with result:

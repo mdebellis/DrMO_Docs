@@ -32,6 +32,14 @@ OPTIONAL{?document drmo:hasSubSection ?section.
 OPTIONAL {?document drmo:hasAuthor ?author.}
 OPTIONAL {?document obo:IAO_0000136 ?entity.}}
 
+# Delete isAbout links
+DELETE {?doc1 drmo:isAboutProduct ?prod.
+        ?doc2 obo:IAO_0000136 ?entity.
+		?prod drmo:isDocumentedIn ?doc1.
+		?entity drmo:isDocumentedIn ?doc2.}
+WHERE {?doc1 drmo:isAboutProduct ?prod.
+       ?doc2 obo:IAO_0000136 ?entity.}   
+
 # The next 6 are to do strings to things after loading new documents 
 # 1. View titles for docs with no labels
 SELECT *
