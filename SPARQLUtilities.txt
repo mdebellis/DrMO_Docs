@@ -6,6 +6,45 @@ PREFIX obo: <http://purl.obolibrary.org/obo/>
 PREFIX dct: <http://purl.org/dc/terms/>
 PREFIX bib: <http://purl.org/ontology/bibo/>
 PREFIX mesh: <http://purl.bioontology.org/ontology/MESH/>
+PREFIX ex: <http://www.semanticweb.org/mdebe/ontologies/example#>
+PREFIX skos: <http://www.w3.org/2004/02/skos/core#>
+
+
+CONSTRUCT {?niri rdf:type ex:ClassName;
+                 ex:french_Label ?flabel;
+	             ex:english_Label ?elabel}
+WHERE {?c rdfs:subClassOf owl:Thing;
+          rdfs:label ?clabel1;
+		  rdfs:label ?clabel2.
+    IF(LANG(?clabel1) = "en", BIND(STRBEFORE(?clabel1, "@"), AS ?elabel), owl:Nothing)
+	IF(LANG(?clabel2) = "fr", BIND(STRBEFORE(?clabel2, "@"), AS ?flabel), owl:Nothing)
+	BIND(IRI(CONCAT(STR(?c),"_Label")) as ?niri)
+	FILTER(?c != owl:Thing && ?c != owl:Nothing)}
+	
+PREFIX owl: <http://www.w3.org/2002/07/owl#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX ex: <http://www.semanticweb.org/mdebe/ontologies/example#>
+
+SELECT *
+WHERE {?c rdfs:subClassOf owl:Thing;
+                    rdfs:label ?clabel1;
+                    rdfs:label ?clabel2.
+	BIND(STR(LANG(?clabel1)) AS ?c1lang)	
+	BIND(STR(LANG(?clabel2)) AS ?c2lang)	 
+	BIND(IRI(CONCAT(STR(?c),"_Label")) as ?niri)
+	FILTER(?c != owl:Thing && ?c != owl:Nothing && ?c1lang = "en" && ?c2lang = "fr"  )}
+	
+CONSTRUCT {?niri rdf:type ex:ClassName;
+                 ex:french_Label ?flabel;
+	             ex:english_Label ?elabel}	
+WHERE {?c rdfs:subClassOf owl:Thing;
+                    rdfs:label ?clabel1;
+                    rdfs:label ?clabel2.
+	BIND(STR(LANG(?clabel1)) AS ?c1lang)	
+	BIND(STR(LANG(?clabel2)) AS ?c2lang)	 
+	BIND(IRI(CONCAT(STR(?c),"_Label")) as ?niri)
+	FILTER(?c != owl:Thing && ?c != owl:Nothing && ?c1lang = "en" && ?c2lang = "fr"  )}
 
 # Adding some queries to just display data
 # Documents with sub-sections and text

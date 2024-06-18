@@ -1,7 +1,7 @@
 from franz.openrdf.connect import ag_connect
 from franz.openrdf.vocabulary import RDF
 
-conn = ag_connect('drmo', host='localhost', port=10035, user='xxxxxxx', password='xxxxxxx')
+conn = ag_connect('xxxxxxxx', host='xxxxx', port=xxxxxxxx, user='xxxxxx', password='xxxxxx')
 
 owl_named_individual = conn.createURI("http://www.w3.org/2002/07/owl#NamedIndividual")
 owl_datatype_property = conn.createURI("http://www.w3.org/2002/07/owl#DatatypeProperty")
