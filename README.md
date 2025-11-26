@@ -72,4 +72,56 @@ Dentistry lacks the structured knowledge resources (similar to RxNorm or SNOMED 
 ---
 
 ## 📂 Repository Structure
+├── ontology/ # Dental Restorative Materials Ontology (OWL/Turtle)
+├── data/ # Curated document corpus (summaries, structured extracts)
+├── ui_version_2.py # Streamlit demonstration interface
+├── drmo_basic_ui2.py # Early UI prototype (for screenshots and testing)
+├── rag_pipeline/ # Retrieval + embedding utilities (work in progress)
+└── README.md # This file
+
+*(Adjust after import if folder names differ.)*
+
+---
+
+## 🚀 Status
+
+This repository contains a **working prototype** of the ontology-grounded RAG system used for research, evaluation, and demonstration purposes.
+
+The code is not production-ready but demonstrates:
+- feasibility  
+- architecture  
+- core functionality  
+- integration of symbolic + neural methods  
+
+The goal is to expand, refine, and deploy the system under the SAAKSHII initiative.
+
+---
+
+## 👩‍⚕️ Team
+
+**Women-led initiative** integrating expertise in:
+- clinical dentistry  
+- ontology engineering  
+- knowledge graphs  
+- retrieval-augmented generation  
+- AI safety and evaluation
+
+Names and roles will appear in the proposal, not publicly in the repo.
+
+---
+
+## 🔒 API Keys and Secrets
+
+No API keys or secrets are included in this repository.  
+Any previous development keys have been revoked.
+
+Users must provide their own environment variables for local testing.
+
+---
+
+## 📬 Contact
+
+This project is part of the **AI by HER Global Impact Challenge (Healthcare Track)** and is under active development.
+
+For inquiries, please contact the project team.
 
