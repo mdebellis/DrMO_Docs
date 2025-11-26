@@ -72,14 +72,17 @@ Dentistry lacks the structured knowledge resources (similar to RxNorm or SNOMED 
 ---
 
 ## 📂 Repository Structure
+```
+
 ├── ontology/ # Dental Restorative Materials Ontology (OWL/Turtle)
 ├── data/ # Curated document corpus (summaries, structured extracts)
 ├── ui_version_2.py # Streamlit demonstration interface
 ├── drmo_basic_ui2.py # Early UI prototype (for screenshots and testing)
 ├── rag_pipeline/ # Retrieval + embedding utilities (work in progress)
 └── README.md # This file
+```
 
-*(Adjust after import if folder names differ.)*
+
 
 ---
 
